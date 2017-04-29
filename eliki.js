@@ -23,32 +23,39 @@ function make_pages_dir() {
 	}
 }
 
-/*
-function sanitise(filename) {
+function sanitise(s) {
 	let result = '';
-	for (let n = 0; n < filename.length; n++) {
-		let c = filename.charAt(n);
+	for (let n = 0; n < s.length; n++) {
+		let c = s.charAt(n);
 		if (c.match(/[a-zA-Z0-9]/)) {
 			result += c;
 		}
 	}
 	return result;
 }
-*/
 
 function parse_markup(markup) {
+	while (1) {
+		let m = markup.match(/(\[\[.*?\]\])/);
+		if (m === null) {
+			break;
+		}
+		let inner = m[1].slice(2, -2);
+		inner = sanitise(inner);
+		markup = markup.replace(m[1], '<a href="#" onclick="view(\'' + inner + '\');return false;">' + inner + '</a>');
+	}
 	return markup;
 }
 
 function display(content) {
-	document.querySelector('#content').innerHTML = parse_markup(content);
+	document.querySelector('#content').innerHTML = content;
 }
 
 function view(page) {
 	let markup = '';
 	let page_path = path.join(pages_dir_path, page);
 	if (fs.existsSync(page_path)) {
-		markup = fs.readFileSync(page_path);
+		markup = fs.readFileSync(page_path, "UTF8");
 	}
 
 	let content = '';
@@ -66,7 +73,7 @@ function edit(page) {
 	let page_path = path.join(pages_dir_path, page);
 
 	if (fs.existsSync(page_path)) {
-		let markup = fs.readFileSync(page_path);
+		let markup = fs.readFileSync(page_path, "UTF8");
 		make_editor(page, markup);
 	} else {
 		make_editor(page, '');
@@ -86,6 +93,6 @@ function save() {
 	let page = document.querySelector('#pagename').innerHTML;
 	let markup = document.querySelector('#editor').value;
 	let page_path = path.join(pages_dir_path, page);
-	fs.writeFileSync(page_path, markup);
+	fs.writeFileSync(page_path, markup, "UTF8");
 	view(page);
 }
