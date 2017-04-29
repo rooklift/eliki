@@ -76,7 +76,7 @@ function view(page) {
 	let markup = '';
 	let page_path = path.join(pages_dir_path, page);
 	if (fs.existsSync(page_path)) {
-		markup = fs.readFileSync(page_path, "UTF8");
+		markup = fs.readFileSync(page_path, 'UTF8');
 	}
 
 	let content = '';
@@ -94,7 +94,7 @@ function edit(page) {
 	let page_path = path.join(pages_dir_path, page);
 
 	if (fs.existsSync(page_path)) {
-		let markup = fs.readFileSync(page_path, "UTF8");
+		let markup = fs.readFileSync(page_path, 'UTF8');
 		make_editor(page, markup);
 	} else {
 		make_editor(page, '');
@@ -114,7 +114,7 @@ function save() {
 	let page = document.querySelector('#pagename').innerHTML;
 	let markup = document.querySelector('#editor').value;
 	let page_path = path.join(pages_dir_path, page);
-	fs.writeFileSync(page_path, markup, "UTF8");
+	fs.writeFileSync(page_path, markup, 'UTF8');
 	view(page);
 }
 
@@ -124,9 +124,9 @@ function fix_a_tags() {
 
 	let a_tags = document.getElementsByTagName("a");
 	for (let i = 0; i < a_tags.length; i++) {
-		if (a_tags[i].getAttribute("href") !== "#") {
-			a_tags[i].setAttribute("onclick", "shell.openExternal('" + a_tags[i].href + "'); return false;");
-			a_tags[i].href = "#";
+		if (a_tags[i].getAttribute('href') !== '#') {
+			a_tags[i].setAttribute('onclick', 'shell.openExternal("' + a_tags[i].href + '"); return false;');
+			a_tags[i].href = '#';
 		}
 	}
 }
