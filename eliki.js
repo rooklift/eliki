@@ -74,7 +74,7 @@ function display(content) {
 
 function view(page) {
 	let markup = '';
-	let page_path = path.join(pages_dir_path, page);
+	let page_path = path.join(pages_dir_path, page.toLowerCase());
 	if (fs.existsSync(page_path)) {
 		markup = fs.readFileSync(page_path, 'UTF8');
 	}
@@ -86,7 +86,7 @@ function view(page) {
 }
 
 function edit(page) {
-	let page_path = path.join(pages_dir_path, page);
+	let page_path = path.join(pages_dir_path, page.toLowerCase());
 
 	if (fs.existsSync(page_path)) {
 		let markup = fs.readFileSync(page_path, 'UTF8');
@@ -106,7 +106,7 @@ function make_editor(page, markup) {
 
 function save(page) {
 	let markup = document.querySelector('#editor').value;
-	let page_path = path.join(pages_dir_path, page);
+	let page_path = path.join(pages_dir_path, page.toLowerCase());
 	fs.writeFileSync(page_path, markup, 'UTF8');
 	view(page);
 }
