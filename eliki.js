@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const app = require('electron').remote.app;
 const ipcRenderer = require('electron').ipcRenderer;
+const shell = require('electron').shell;
 const alert = require('./modules/alert.js').alert;
 
 // -----------------------------------------------------------------------------
@@ -50,7 +51,7 @@ function parse_markup(markup) {
 		}
 		let inner = m[1].slice(2, -2);
 		inner = sanitise(inner);
-		markup = markup.replace(m[1], '<a href="#" onclick="view(\'' + inner + '\');return false;">' + inner + '</a>');
+		markup = markup.replace(m[1], '<a href="#" onclick="view(\'' + inner + '\'); return false;">' + inner + '</a>');
 	}
 
 	// Handle newlines
@@ -68,6 +69,7 @@ function parse_markup(markup) {
 
 function display(content) {
 	document.querySelector('#content').innerHTML = content;
+	fix_a_tags();
 }
 
 function view(page) {
@@ -79,7 +81,7 @@ function view(page) {
 
 	let content = '';
 	content += '<div id="pagename" style="display: none">' + page + '</div>\n';
-	content += '<h1>' + page + ' &nbsp; [<a href="#" onclick="edit();return false;">edit</a>]</h1>'
+	content += '<h1>' + page + ' &nbsp; [<a href="#" onclick="edit(); return false;">edit</a>]</h1>'
 	content += parse_markup(markup);
 	display(content);
 }
@@ -114,4 +116,17 @@ function save() {
 	let page_path = path.join(pages_dir_path, page);
 	fs.writeFileSync(page_path, markup, "UTF8");
 	view(page);
+}
+
+function fix_a_tags() {
+
+	// Change <a> tags in the document -- if href is not "#" -- to open in external browser.
+
+	let a_tags = document.getElementsByTagName("a");
+	for (let i = 0; i < a_tags.length; i++) {
+		if (a_tags[i].getAttribute("href") !== "#") {
+			a_tags[i].setAttribute("onclick", "shell.openExternal('" + a_tags[i].href + "'); return false;");
+			a_tags[i].href = "#";
+		}
+	}
 }
