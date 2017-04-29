@@ -1,6 +1,12 @@
 # Eliki
 Eliki is a personal wiki in Electron.
 
+# Dependencies
+
+* marked
+
+# Notes
+
 * Internal wikilinks are formatted [[like so]].
 * Page titles are not case-sensitive.
 * `<br>` tags are added in place of newlines.
