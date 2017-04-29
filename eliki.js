@@ -1,13 +1,13 @@
 "use strict";
 
-const fs = require('fs');
-const path = require('path');
-const app = require('electron').remote.app;
-const ipcRenderer = require('electron').ipcRenderer;
-const shell = require('electron').shell;
-const marked = require('marked');
-const escape = require('escape-html');
 const alert = require('./modules/alert.js').alert;
+const app = require('electron').remote.app;
+const escape = require('escape-html');
+const fs = require('fs');
+const ipcRenderer = require('electron').ipcRenderer;
+const marked = require('marked');
+const path = require('path');
+const shell = require('electron').shell;
 
 // -----------------------------------------------------------------------------
 
