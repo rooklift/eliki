@@ -5,6 +5,10 @@ const ipcMain = require("electron").ipcMain;
 const windows = require("./modules/windows");
 const alert = require("./modules/alert");
 
+const MOTD = `
+Make wikilinks [[like so]].
+Everything else is Markdown.`
+
 electron.app.on("ready", () => {
 	windows.new({width: 1600, height: 900, page: "eliki.html"});
 	menu_build();
@@ -20,9 +24,9 @@ function menu_build() {
 			label: "Menu",
 			submenu: [
 				{
-					label: "About",
+					label: "Help",
 					click: () => {
-						alert.alert(electron.app.getName() + " " + electron.app.getVersion() + " running under Electron " + process.versions.electron);
+						alert.alert(electron.app.getName() + " " + electron.app.getVersion() + " running under Electron " + process.versions.electron + "\n" + MOTD);
 					}
 				},
 				{
