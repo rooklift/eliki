@@ -98,7 +98,7 @@ function edit(page) {
 
 function make_editor(page, markup) {
 	let content = '';
-	content += `<h1>Editing ${page}...</h1>`;
+	content += `<h1>Editing <span id="title">${page}</span></h1>`;
 	content += `<div><button onclick="save('${page}')">Save</button> &nbsp; <button onclick="view('${page}')">Cancel</button><br><br></div>`;
 	content += `<div id="editordiv"><textarea id="editor">${markup}</textarea></div>`;
 	display(content);
