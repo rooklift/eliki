@@ -1,5 +1,11 @@
 # Eliki
-Eliki is a personal wiki in Electron.
+
+* Eliki is a personal wiki in Electron.
+
+# Usage
+
+* npm install
+* electron .
 
 # Dependencies
 
