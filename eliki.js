@@ -36,7 +36,7 @@ function make_pages_dir() {
 
 function sanitise(s) {
 
-	// There are likely some dangers if we allow too many characters.
+	// There are likely some dangers if we allow interesting characters.
 	// e.g. escaping the directory or confusing the inlined JS in the HTML.
 
 	let result = '';
