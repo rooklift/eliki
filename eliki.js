@@ -109,9 +109,19 @@ function make_editor(page, markup) {
 }
 
 function save(page) {
-	let markup = document.querySelector('#editor').value;
 	let page_path = path.join(pages_dir_path, page.toLowerCase());
-	fs.writeFileSync(page_path, markup, 'UTF8');
+	let markup = document.querySelector('#editor').value;
+
+	try {
+		if (markup.trim() === '') {
+			fs.unlinkSync(page_path);
+		} else {
+			fs.writeFileSync(page_path, markup, 'UTF8');
+		}
+	} catch(err) {
+    	// This can happen when we try to unlink a non-existant file.
+	}
+
 	view(page);
 }
 
