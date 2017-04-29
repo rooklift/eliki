@@ -51,9 +51,13 @@ let state = {
 	},
 
 	set_paths: function() {
+
 		this.filename = '';
-		for (let n = 0; n < this.display.length; n++) {
-			let c = this.display.charAt(n);
+
+		let display_lower = this.display.toLowerCase();
+
+		for (let n = 0; n < display_lower.length; n++) {
+			let c = display_lower.charAt(n);
 			if (c.match(/[a-zA-Z0-9 ]/)) {
 				this.filename += c;
 			}
