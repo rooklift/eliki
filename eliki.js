@@ -35,6 +35,9 @@ function sanitise(s) {
 }
 
 function parse_markup(markup) {
+
+	// Handle [[links]]
+
 	while (1) {
 		let m = markup.match(/(\[\[.*?\]\])/);
 		if (m === null) {
@@ -44,6 +47,17 @@ function parse_markup(markup) {
 		inner = sanitise(inner);
 		markup = markup.replace(m[1], '<a href="#" onclick="view(\'' + inner + '\');return false;">' + inner + '</a>');
 	}
+
+	// Handle newlines
+
+	while (1) {
+		let m = markup.match(/(\n)/);
+		if (m === null) {
+			break;
+		}
+		markup = markup.replace(m[1], '<br>');
+	}
+
 	return markup;
 }
 
