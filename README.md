@@ -7,7 +7,7 @@
 * Internal wikilinks are formatted [[like so]].
 * Page titles are not case-sensitive.
 * Everything you write will be interpreted as Markdown.
-* External links (i.e. `<a href="whatver">`) are opened in your main web browser.
+* External links are opened in your main web browser.
 
 # Example Page
 
