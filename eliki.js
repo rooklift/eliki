@@ -33,9 +33,13 @@ function sanitise(s) {
 	let result = '';
 	for (let n = 0; n < s.length; n++) {
 		let c = s.charAt(n);
-		if (c.match(/[a-zA-Z0-9]/)) {
+		if (c.match(/[a-zA-Z0-9 ]/)) {
 			result += c;
 		}
+	}
+
+	if (result.length > 255) {
+		result = result.slice(0, 255);
 	}
 	return result;
 }
