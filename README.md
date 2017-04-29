@@ -12,7 +12,7 @@
 # Example Page
 
 ```
-Eliki example page...
+Eliki *example* page...
 
 # Internal links
 
