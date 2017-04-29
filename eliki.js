@@ -133,6 +133,7 @@ let state = {
 		everything += `<div id="editordiv"><textarea id="editor"></textarea></div>`;
 		document.querySelector('#content').innerHTML = everything;
 		document.querySelector('#editor').value = this.markup;
+		document.querySelector('#title').innerHTML = this.escaped;
 	},
 
 	save: function() {
