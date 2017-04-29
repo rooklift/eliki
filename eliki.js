@@ -53,7 +53,7 @@ function view(page) {
 
 	let content = '';
 	content += '<div id="pagename" style="display: none">' + page + '</div>\n';
-	content += '<h1>' + page + ' (<a href="#" onclick="edit();return false;">edit</a>)</h1>'
+	content += '<h1>' + page + ' &nbsp; [<a href="#" onclick="edit();return false;">edit</a>]</h1>'
 	content += parse_markup(markup);
 	display(content);
 }
@@ -77,8 +77,8 @@ function make_editor(page, markup) {
 	let content = '';
 	content += '<div id="pagename" style="display: none">' + page + '</div>\n';
 	content += '<h1>Editing ' + page + '...</h1>\n';
-	content += '<textarea id="editor">' + markup + '</textarea>\n';
-	content += '<div><button onclick="save()">Save</button></div>\n';
+	content += '<div><button onclick="save()">Save</button><br><br></div>\n';
+	content += '<div id="editordiv"><textarea id="editor">' + markup + '</textarea></div>\n';
 	display(content);
 }
 
