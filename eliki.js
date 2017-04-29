@@ -160,12 +160,28 @@ let state = {
 
 // -----------------------------------------------------------------------------
 
+function list_all_pages() {
+	let all_pages = fs.readdirSync(pages_dir_path);
+	all_pages.sort();
+	let everything = '';
+	everything += `<h1>Special: <span id="title">All Pages</span></h1>`;
+	everything += `<ul>`;
+	for (let n = 0; n < all_pages.length; n++) {
+		let target = all_pages[n];
+		everything += `<li><a href="#" onclick="state.go('${escape(target)}'); return false;">${escape(target)}</a></li>`;
+	}
+	everything += `</ul>`;
+	document.querySelector('#content').innerHTML = everything;
+}
+
+// -----------------------------------------------------------------------------
+
 ipcRenderer.on('view', (event, arg) => {
 	state.go(arg);
 });
 
 ipcRenderer.on('list_all_pages', (event, arg) => {
-	alert("TODO");
+	list_all_pages();
 });
 
 if (fs.existsSync(pages_dir_path) === false) {
