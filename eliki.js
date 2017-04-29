@@ -35,10 +35,14 @@ function make_pages_dir() {
 }
 
 function sanitise(s) {
+
+	// There are likely some dangers if we allow too many characters.
+	// e.g. escaping the directory or confusing the inlined JS in the HTML.
+
 	let result = '';
 	for (let n = 0; n < s.length; n++) {
 		let c = s.charAt(n);
-		if (c.match(/[a-zA-Z0-9 ]/)) {
+		if (c.match(/[a-zA-Z0-9 ]/)) {		// So just allow alphanumeric plus space.
 			result += c;
 		}
 	}
@@ -76,6 +80,8 @@ function display(content) {
 }
 
 function view(page) {
+	page = sanitise(page);
+
 	let markup = '';
 	let page_path = path.join(pages_dir_path, page.toLowerCase());
 	if (fs.existsSync(page_path)) {
@@ -89,6 +95,8 @@ function view(page) {
 }
 
 function edit(page) {
+	page = sanitise(page);
+
 	let page_path = path.join(pages_dir_path, page.toLowerCase());
 
 	if (fs.existsSync(page_path)) {
@@ -100,6 +108,8 @@ function edit(page) {
 }
 
 function make_editor(page, markup) {
+	page = sanitise(page);
+
 	let content = '';
 	content += `<h1>Editing <span id="title">${page}</span></h1>`;
 	content += `<div><button onclick="save('${page}')">Save</button> &nbsp; <button onclick="view('${page}')">Cancel</button><br><br></div>`;
@@ -108,6 +118,8 @@ function make_editor(page, markup) {
 }
 
 function save(page) {
+	page = sanitise(page);
+
 	let page_path = path.join(pages_dir_path, page.toLowerCase());
 	let markup = document.querySelector('#editor').value;
 
