@@ -51,7 +51,7 @@ function parse_markup(markup) {
 		}
 		let inner = m[1].slice(2, -2);
 		inner = sanitise(inner);
-		markup = markup.replace(m[1], '<a href="#" onclick="view(\'' + inner + '\'); return false;">' + inner + '</a>');
+		markup = markup.replace(m[1], `<a href="#" onclick="view('${inner}'); return false;">${inner}</a>`);
 	}
 
 	// Handle newlines
@@ -80,17 +80,12 @@ function view(page) {
 	}
 
 	let content = '';
-	content += '<div id="pagename" style="display: none">' + page + '</div>\n';
-	content += '<h1>' + page + ' &nbsp; [<a href="#" onclick="edit(); return false;">edit</a>]</h1>'
+	content += `<h1>${page} &nbsp; [<a href="#" onclick="edit('${page}'); return false;">edit</a>]</h1>`;
 	content += parse_markup(markup);
 	display(content);
 }
 
 function edit(page) {
-	if (page === undefined) {
-		page = document.querySelector('#pagename').innerHTML;
-	}
-
 	let page_path = path.join(pages_dir_path, page);
 
 	if (fs.existsSync(page_path)) {
@@ -103,15 +98,13 @@ function edit(page) {
 
 function make_editor(page, markup) {
 	let content = '';
-	content += '<div id="pagename" style="display: none">' + page + '</div>\n';
-	content += '<h1>Editing ' + page + '...</h1>\n';
-	content += '<div><button onclick="save()">Save</button><br><br></div>\n';
-	content += '<div id="editordiv"><textarea id="editor">' + markup + '</textarea></div>\n';
+	content += `<h1>Editing ${page}...</h1>\n`;
+	content += `<div><button onclick="save('${page}')">Save</button> &nbsp; <button onclick="view('${page}')">Cancel</button><br><br></div>\n`;
+	content += `<div id="editordiv"><textarea id="editor">${markup}</textarea></div>\n`;
 	display(content);
 }
 
-function save() {
-	let page = document.querySelector('#pagename').innerHTML;
+function save(page) {
 	let markup = document.querySelector('#editor').value;
 	let page_path = path.join(pages_dir_path, page);
 	fs.writeFileSync(page_path, markup, 'UTF8');
@@ -125,7 +118,7 @@ function fix_a_tags() {
 	let a_tags = document.getElementsByTagName("a");
 	for (let i = 0; i < a_tags.length; i++) {
 		if (a_tags[i].getAttribute('href') !== '#') {
-			a_tags[i].setAttribute('onclick', 'shell.openExternal("' + a_tags[i].href + '"); return false;');
+			a_tags[i].setAttribute('onclick', `shell.openExternal('${a_tags[i].href}'); return false;`);
 			a_tags[i].href = '#';
 		}
 	}
