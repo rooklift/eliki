@@ -35,6 +35,12 @@ let state = {
 		this.display = s;
 		this.escaped = escape(s);
 		this.set_paths();
+
+		if (this.filename === '') {
+			alert("Tried to go to <empty string>");
+			this.go("Index");
+		}
+
 		if (fs.existsSync(this.filepath)) {
 			this.markup = fs.readFileSync(this.filepath, 'UTF8');
 		} else {
@@ -100,6 +106,9 @@ let state = {
 		everything += this.content;
 		document.querySelector('#content').innerHTML = everything;
 		document.querySelector('#title').innerHTML = this.escaped;
+
+		// We replace all real a tags with calls to this.open_external()
+		// storing targets in the this.external array...
 
 		this.external = [];
 
