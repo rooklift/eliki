@@ -3,19 +3,24 @@
 const fs = require('fs');
 const path = require('path');
 const app = require('electron').remote.app;
+const ipcRenderer = require('electron').ipcRenderer;
 const alert = require('./modules/alert.js').alert;
+
+// -----------------------------------------------------------------------------
 
 const userdata_path = app.getPath('userData');
 const pages_dir_path = path.join(userdata_path, 'pages');
 
-main();
+// -----------------------------------------------------------------------------
 
-// --------------------------------
+ipcRenderer.on('view', (event, arg) => {
+	view(arg);
+});
 
-function main() {
-	make_pages_dir();
-	view('Index');
-}
+make_pages_dir();
+view('Index');
+
+// -----------------------------------------------------------------------------
 
 function make_pages_dir() {
 	if (fs.existsSync(pages_dir_path) === false) {

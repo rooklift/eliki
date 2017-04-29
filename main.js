@@ -1,6 +1,7 @@
 "use strict";
 
 const electron = require("electron");
+const ipcMain = require("electron").ipcMain;
 const windows = require("./modules/windows");
 const alert = require("./modules/alert");
 
@@ -28,6 +29,12 @@ function menu_build() {
 					type: "separator"
 				},
 				{
+					label: "Goto Index",
+					click: () => {
+						windows.send("view", "Index");
+					}
+				},
+				{
 					label: "Zoom out",
 					click: () => {
 						windows.change_zoom(-0.1);
@@ -38,9 +45,6 @@ function menu_build() {
 					click: () => {
 						windows.change_zoom(0.1);
 					}
-				},
-				{
-					role: "reload"
 				},
 				{
 					role: "quit"

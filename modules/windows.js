@@ -61,3 +61,11 @@ exports.set_zoom = (val) => {
         contents.setZoomFactor(val);
     }
 };
+
+exports.send = (channel, msg) => {
+    let n;
+    for (n = 0; n < all.length; n += 1) {
+        let contents = all[n].webContents;
+        contents.send(channel, msg);
+    }
+};
