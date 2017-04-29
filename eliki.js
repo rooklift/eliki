@@ -16,23 +16,23 @@ const pages_dir_path = path.join(userdata_path, 'pages');
 
 let state = {
 
-	display: "",
-	escaped: "",
-	filename: "",
-	filepath: "",
-	internal: [],
-	external: [],
-	markup: "",
-	content: "",
+	page: "",		// Page name this.go() was called with
+	escaped: "",	// Escaped version of the page name
+	filename: "",	// Page name with only alphanumeric chars (plus space)
+	filepath: "",	// Complete path for the file we are dealing with
+	internal: [],	// All internal links
+	external: [],	// All external links
+	markup: "",		// Markup read from the file
+	content: "",	// Result after parsing the markup
 
 	go: function(s) {
 		if (s === undefined) {
-			s = this.display;
+			s = this.page;
 		}
 		if (typeof s === 'number') {
 			s = this.internal[s];
 		}
-		this.display = s;
+		this.page = s;
 		this.escaped = escape(s);
 		this.set_paths();
 
@@ -54,10 +54,10 @@ let state = {
 
 		this.filename = '';
 
-		let display_lower = this.display.toLowerCase();
+		let page_lower = this.page.toLowerCase();
 
-		for (let n = 0; n < display_lower.length; n++) {
-			let c = display_lower.charAt(n);
+		for (let n = 0; n < page_lower.length; n++) {
+			let c = page_lower.charAt(n);
 			if (c.match(/[a-zA-Z0-9 ]/)) {
 				this.filename += c;
 			}
@@ -88,11 +88,8 @@ let state = {
 			}
 			let target = m[1].slice(2, -2);
 			this.internal.push(target);
-
 			let i = this.internal.length - 1;
-			let display_target = escape(target);
-
-			result = result.replace(m[1], `<a href="#" onclick="state.go(${i}); return false;">${display_target}</a>`);
+			result = result.replace(m[1], `<a href="#" onclick="state.go(${i}); return false;">${escape(target)}</a>`);
 		}
 
 		// Handle Markdown
