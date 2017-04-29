@@ -1,7 +1,7 @@
 # Eliki
 
 * Eliki is a personal wiki in Electron.
-* This is a hobby project and *not safe against malicious inputs*.
+* This is a hobby project and *probably not safe against malicious inputs*.
 
 # Wiki Notes
 
