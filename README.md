@@ -37,4 +37,5 @@ Eliki *example* page...
 
 # Dependencies
 
+* [escape-html](https://www.npmjs.com/package/escape-html)
 * [marked](https://www.npmjs.com/package/marked)
