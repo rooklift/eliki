@@ -5,6 +5,7 @@ const path = require('path');
 const app = require('electron').remote.app;
 const ipcRenderer = require('electron').ipcRenderer;
 const shell = require('electron').shell;
+const marked = require('marked');
 const alert = require('./modules/alert.js').alert;
 
 // -----------------------------------------------------------------------------
@@ -62,15 +63,9 @@ function parse_markup(markup) {
 		markup = markup.replace(m[1], `<a href="#" onclick="view('${target}'); return false;">${target}</a>`);
 	}
 
-	// Handle newlines
+	// Handle Markdown
 
-	while (1) {
-		let m = markup.match(/(\n)/);
-		if (m === null) {
-			break;
-		}
-		markup = markup.replace(m[1], '<br>');
-	}
+	markup = marked(markup);
 
 	return markup;
 }
