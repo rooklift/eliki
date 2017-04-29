@@ -3,6 +3,7 @@
 	"version" : "0.1.0",
 	"main"    : "main.js",
 	"dependencies": {
-		"marked": "^0.3.6"
+		"marked": "^0.3.6",
+        "escape-html": "^1.0.3"
 	}
 }
