@@ -18,6 +18,10 @@ ipcRenderer.on('view', (event, arg) => {
 	view(arg);
 });
 
+ipcRenderer.on('list_all_pages', (event, arg) => {
+	list_all_pages();
+});
+
 make_pages_dir();
 view('Index');
 
@@ -53,9 +57,9 @@ function parse_markup(markup) {
 		if (m === null) {
 			break;
 		}
-		let inner = m[1].slice(2, -2);
-		inner = sanitise(inner);
-		markup = markup.replace(m[1], `<a href="#" onclick="view('${inner}'); return false;">${inner}</a>`);
+		let target = m[1].slice(2, -2);
+		target = sanitise(target);
+		markup = markup.replace(m[1], `<a href="#" onclick="view('${target}'); return false;">${target}</a>`);
 	}
 
 	// Handle newlines
@@ -136,4 +140,18 @@ function fix_a_tags() {
 			a_tags[i].href = '#';
 		}
 	}
+}
+
+function list_all_pages() {
+	let all_pages = fs.readdirSync(pages_dir_path);
+	all_pages.sort();
+	let content = '';
+	content += `<h1>Special: <span id="title">All Pages</span></h1>`;
+	content += `<ul>`;
+	for (let n = 0; n < all_pages.length; n++) {
+		let target = all_pages[n];
+		content += `<li><a href="#" onclick="view('${target}'); return false;">${target}</a></li>`;
+	}
+	content += `</ul>`;
+	display(content);
 }

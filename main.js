@@ -35,6 +35,15 @@ function menu_build() {
 					}
 				},
 				{
+					label: "List All Pages",
+					click: () => {
+						windows.send("list_all_pages", "");
+					}
+				},
+				{
+					type: "separator"
+				},
+				{
 					label: "Zoom out",
 					click: () => {
 						windows.change_zoom(-0.1);
