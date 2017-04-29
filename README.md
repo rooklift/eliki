@@ -2,8 +2,6 @@
 
 * Eliki is a personal wiki in Electron.
 
-# Wiki Notes
-
 * Internal wikilinks are formatted [[like so]].
 * Page titles are not case-sensitive.
 * Everything you write will be interpreted as Markdown.
