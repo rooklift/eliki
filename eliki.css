@@ -34,3 +34,5 @@ a:link {color: #e0b872; text-decoration: underline;}
 a:visited {color: #e0b872; text-decoration: underline;}
 a:hover {color: #e0b872; text-decoration: underline;}
 a:active {color: #ffff00; text-decoration: underline;}
+
+.external {color: #ffff00 !important;}

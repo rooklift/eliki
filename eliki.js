@@ -137,7 +137,8 @@ function fix_a_tags() {
 	for (let i = 0; i < a_tags.length; i++) {
 		if (a_tags[i].getAttribute('href') !== '#') {
 			a_tags[i].setAttribute('onclick', `shell.openExternal('${a_tags[i].href}'); return false;`);
-			a_tags[i].href = '#';
+			a_tags[i].setAttribute('class', 'external');
+			a_tags[i].setAttribute('href', '#');
 		}
 	}
 }
