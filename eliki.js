@@ -80,7 +80,7 @@ function view(page) {
 	}
 
 	let content = '';
-	content += `<h1>${page} &nbsp; [<a href="#" onclick="edit('${page}'); return false;">edit</a>]</h1>`;
+	content += `<h1><span id="title">${page}</span> &nbsp; [<a href="#" onclick="edit('${page}'); return false;">edit</a>]</h1>`;
 	content += parse_markup(markup);
 	display(content);
 }
