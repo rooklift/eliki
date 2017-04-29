@@ -1,4 +1,4 @@
-# eliki
+# Eliki
 Eliki is a personal wiki in Electron.
 
 * Internal wikilinks are formatted [[like so]].
