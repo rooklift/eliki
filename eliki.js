@@ -144,7 +144,7 @@ function fix_a_tags() {
 	let a_tags = document.getElementsByTagName("a");
 	for (let i = 0; i < a_tags.length; i++) {
 		if (a_tags[i].getAttribute('href') !== '#') {
-			a_tags[i].setAttribute('onclick', `shell.openExternal('${a_tags[i].href}'); return false;`);
+			a_tags[i].setAttribute('onclick', `shell.openExternal('${a_tags[i].href}'); return false;`);	// FIXME: looks unsafe
 			a_tags[i].setAttribute('class', 'external');
 			a_tags[i].setAttribute('href', '#');
 		}
