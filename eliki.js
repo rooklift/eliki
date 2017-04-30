@@ -94,8 +94,8 @@ let eliki = {
 			let target_raw = unescape(target_escaped);
 			this.internal.push(target_raw);
 
-			let i = this.internal.length - 1;
-			result = result.replace(m[1], `<a href="#" onclick="eliki.go(${i}); return false;">${target_escaped}</a>`);
+			let id = this.internal.length - 1;
+			result = result.replace(m[1], `<a href="#" onclick="eliki.go(${id}); return false;">${target_escaped}</a>`);
 		}
 
 		this.content = result;
