@@ -5,7 +5,8 @@
 # Wiki Notes
 
 * Internal wikilinks are formatted [[like so]].
-* Page titles are not case-sensitive and purge most non-alphanumeric ASCII characters.
+* Pages are stored as individual files.
+* Page titles are not case-sensitive but will purge some characters not allowed in filenames.
 * Everything you write will be interpreted as Markdown.
 * External links are opened in your main web browser.
 
