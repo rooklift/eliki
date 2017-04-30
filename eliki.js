@@ -7,6 +7,7 @@ const fs = require('fs');
 const ipcRenderer = require('electron').ipcRenderer;
 const marked = require('marked');
 const path = require('path');
+const sanitize = require('sanitize-filename');
 const shell = require('electron').shell;
 const unescape = require('unescape-html');
 
@@ -56,22 +57,8 @@ let eliki = {
 	},
 
 	set_paths: function() {
-
-		this.filename = '';
-
 		let page_lower = this.page.toLowerCase();
-
-		for (let n = 0; n < page_lower.length; n++) {
-			let c = page_lower.charAt(n);
-			if (c.match(/[a-zA-Z0-9 ]/)) {
-				this.filename += c;
-			}
-		}
-
-		if (this.filename.length > 255) {
-			this.filename = this.filename.slice(0, 255);
-		}
-
+		this.filename = sanitize(page_lower);
 		this.filepath = path.join(pages_dir_path, this.filename);
 	},
 
