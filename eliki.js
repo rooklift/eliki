@@ -12,8 +12,12 @@ const unescape = require('unescape-html');
 
 // -----------------------------------------------------------------------------
 
+marked.setOptions({sanitize: true});	// Important!
+
 const userdata_path = app.getPath('userData');
 const pages_dir_path = path.join(userdata_path, 'pages');
+
+// -----------------------------------------------------------------------------
 
 let eliki = {
 
@@ -203,7 +207,5 @@ ipcRenderer.on('list_all_pages', (event, arg) => {
 if (fs.existsSync(pages_dir_path) === false) {
 	fs.mkdirSync(pages_dir_path);
 }
-
-marked.setOptions({sanitize: true});	// Important!
 
 eliki.go("Index");
