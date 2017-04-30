@@ -2,12 +2,6 @@
 
 * Eliki is a personal wiki in Electron.
 
-# Security Warnings
-
-* This is a hobby project and *not safe against malicious inputs*.
-* Simply inserting `<script>` blocks into your wiki isn't enough to get them to run, however.
-* An actual hack would be `<img src="whatever.gif" onerror="alert('hi');" />`
-
 # Wiki Notes
 
 * Internal wikilinks are formatted [[like so]].
@@ -39,3 +33,4 @@ Eliki *example* page...
 
 * [escape-html](https://www.npmjs.com/package/escape-html)
 * [marked](https://www.npmjs.com/package/marked)
+* [unescape-html](https://www.npmjs.com/package/unescape-html)

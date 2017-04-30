@@ -8,13 +8,14 @@ const ipcRenderer = require('electron').ipcRenderer;
 const marked = require('marked');
 const path = require('path');
 const shell = require('electron').shell;
+const unescape = require('unescape-html');
 
 // -----------------------------------------------------------------------------
 
 const userdata_path = app.getPath('userData');
 const pages_dir_path = path.join(userdata_path, 'pages');
 
-let state = {
+let eliki = {
 
 	page: "",		// Page name this.go() was called with
 	escaped: "",	// Escaped version of the page name
@@ -73,37 +74,36 @@ let state = {
 	parse: function() {
 
 		let result = this.markup;
+		result = marked(result);
 
-		// Each internal link gets put in the array of links, so they can
-		// be referred to by number, which is safer.
+		// Each internal [[link]] gets put in the array of links, so
+		// they can be referred to by number, which is safer.
 
 		this.internal = [];
-
-		// Handle [[links]]
 
 		while (1) {
 			let m = result.match(/(\[\[.*?\]\])/);
 			if (m === null) {
 				break;
 			}
-			let target = m[1].slice(2, -2);
-			this.internal.push(target);
+
+			// marked is set (elsewhere) to sanitize input, i.e. escape HTML chars.
+			// So for our records, we must unescape them.
+
+			let target_escaped = m[1].slice(2, -2);
+			let target_raw = unescape(target_escaped);
+			this.internal.push(target_raw);
+
 			let i = this.internal.length - 1;
-			result = result.replace(m[1], `<a href="#" onclick="state.go(${i}); return false;">${escape(target)}</a>`);
+			result = result.replace(m[1], `<a href="#" onclick="eliki.go(${i}); return false;">${target_escaped}</a>`);
 		}
-
-		// Handle Markdown
-
-		result = marked(result);
-
-		// Done
 
 		this.content = result;
 	},
 
 	view: function() {
 		let everything = '';
-		everything += `<h1><span id="title"></span> &nbsp; [<a href="#" onclick="state.edit(); return false;">edit</a>]</h1>`;
+		everything += `<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>`;
 		everything += this.content;
 		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#title').innerHTML = this.escaped;
@@ -120,7 +120,7 @@ let state = {
 				let target = encodeURI(a_tags[i].getAttribute('href'))
 				this.external.push(target);
 				let id = this.external.length - 1;
-				a_tags[i].setAttribute('onclick', `state.open_external(${id}); return false;`);
+				a_tags[i].setAttribute('onclick', `eliki.open_external(${id}); return false;`);
 				a_tags[i].setAttribute('class', 'external');
 				a_tags[i].setAttribute('href', '#');
 			}
@@ -130,7 +130,7 @@ let state = {
 	edit: function() {
 		let everything = '';
 		everything += `<h1>Editing <span id="title"></span></h1>`;
-		everything += `<div><button onclick="state.save()">Save</button> &nbsp; <button onclick="state.go()">Cancel</button><br><br></div>`;
+		everything += `<div><button onclick="eliki.save()">Save</button> &nbsp; <button onclick="eliki.go()">Cancel</button><br><br></div>`;
 		everything += `<div id="editordiv"><textarea id="editor"></textarea></div>`;
 		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#editor').value = this.markup;
@@ -168,7 +168,7 @@ function list_all_pages() {
 	everything += `<ul>`;
 	for (let n = 0; n < all_pages.length; n++) {
 		let target = all_pages[n];
-		everything += `<li><a href="#" onclick="state.go('${escape(target)}'); return false;">${escape(target)}</a></li>`;
+		everything += `<li><a href="#" onclick="eliki.go('${escape(target)}'); return false;">${escape(target)}</a></li>`;
 	}
 	everything += `</ul>`;
 	document.querySelector('#everything').innerHTML = everything;
@@ -177,7 +177,7 @@ function list_all_pages() {
 // -----------------------------------------------------------------------------
 
 ipcRenderer.on('view', (event, arg) => {
-	state.go(arg);
+	eliki.go(arg);
 });
 
 ipcRenderer.on('list_all_pages', (event, arg) => {
@@ -188,4 +188,6 @@ if (fs.existsSync(pages_dir_path) === false) {
 	fs.mkdirSync(pages_dir_path);
 }
 
-state.go("Index");
+marked.setOptions({sanitize: true});	// Important!
+
+eliki.go("Index");
