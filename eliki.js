@@ -126,7 +126,7 @@ let eliki = {
 		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#editor').value = this.markup;
 		document.querySelector('#title').innerHTML = this.escaped;
-		// allow_tabs();
+		allow_tabs();
 	},
 
 	save: function() {
@@ -154,18 +154,16 @@ let eliki = {
 
 function allow_tabs() {
 
-	// http://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea/14166052
-	// FIXME: this currently breaks undo...
+	// http://stackoverflow.com/questions/22668818/undo-tab-in-textarea
+	// Maybe Chrome specific, but this is Chrome, so...
 
-	let textarea = document.querySelector('#editor');
-	textarea.onkeydown = function(e) {
-		if (e.keyCode == 9 || e.which == 9) {
+	let ta = document.querySelector("#editor");
+	ta.addEventListener("keydown", function(e) {
+		if (e.which === 9) {
 			e.preventDefault();
-			let s = this.selectionStart;
-			this.value = this.value.substring(0, this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
-			this.selectionEnd = s + 1;
+			document.execCommand("insertText", false, "\t");
 		}
-	}
+	}, false);
 }
 
 function list_all_pages() {
