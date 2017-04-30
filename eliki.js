@@ -22,25 +22,30 @@ const pages_dir_path = path.join(userdata_path, 'pages');
 
 let eliki = {
 
-	page: "",		// Page name this.go() was called with
-	escaped: "",	// Escaped version of the page name
-	filename: "",	// Page name with only alphanumeric chars (plus space)
-	filepath: "",	// Complete path for the file we are dealing with
-	internal: [],	// All internal links
-	external: [],	// All external links
-	markup: "",		// Markup read from the file
-	content: "",	// Result after parsing the markup
+	reset: function() {
+		this.page = "";				// Page name this.go() was called with
+		this.escaped = "";			// Escaped version of the page name
+		this.filename = "";			// Page name with only alphanumeric chars (plus space)
+		this.filepath = "";			// Complete path for the file we are dealing with
+
+		this.markup = "";			// Markup read from the file
+		this.content = "";			// Result after parsing the markup
+		this.internal = [];			// All internal links
+		this.external = [];			// All external links
+
+		this.editable = false;		// Are we allowed to edit this
+	},
 
 	go: function(s) {
+
 		if (s === undefined) {
 			s = this.page;
 		}
 		if (typeof s === 'number') {
 			s = this.internal[s];
 		}
-		this.page = s;
-		this.escaped = escape(s);
-		this.set_paths();
+
+		this.setup(s);
 
 		if (this.filename === '') {
 			alert("Tried to go to <empty string>");
@@ -52,13 +57,17 @@ let eliki = {
 		} else {
 			this.markup = ''
 		}
-		this.parse();
-		this.view();
+
+		this.editable = true;
+
+		this.parse_and_view();
 	},
 
-	set_paths: function() {
-		let page_lower = this.page.toLowerCase();
-		this.filename = sanitize(page_lower);
+	setup: function(s) {
+		this.reset();
+		this.page = s;
+		this.escaped = escape(s);
+		this.filename = sanitize(this.page.toLowerCase());
 		this.filepath = path.join(pages_dir_path, this.filename);
 	},
 
@@ -94,7 +103,11 @@ let eliki = {
 
 	view: function() {
 		let everything = '';
-		everything += `<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>`;
+		if (this.editable) {
+			everything += `<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>`;
+		} else {
+			everything += `<h1>Special: <span id="title"></span></h1>`;
+		}
 		everything += this.content;
 		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#title').innerHTML = this.escaped;
@@ -118,7 +131,16 @@ let eliki = {
 		}
 	},
 
+	parse_and_view: function() {
+		this.parse();
+		this.view();
+	},
+
 	edit: function() {
+		if (this.editable === false) {
+			alert("Cannot edit this page.");
+			return;
+		}
 		let everything = '';
 		everything += `<h1>Editing <span id="title"></span></h1>`;
 		everything += `<div><button onclick="eliki.save()">Save</button> &nbsp; <button onclick="eliki.go()">Cancel</button><br><br></div>`;
@@ -147,6 +169,19 @@ let eliki = {
 		} catch (err) {
 			// I dunno what could go wrong.
 		}
+	},
+
+	list_all_pages: function() {
+		this.setup("List All Pages");
+
+		let all_pages = fs.readdirSync(pages_dir_path);
+		all_pages.sort();
+
+		for (let n = 0; n < all_pages.length; n++) {
+			this.markup += "* [[" + all_pages[n] + "]]\n";
+		}
+
+		this.parse_and_view();
 	}
 }
 
@@ -166,20 +201,6 @@ function allow_tabs() {
 	}, false);
 }
 
-function list_all_pages() {
-	let all_pages = fs.readdirSync(pages_dir_path);
-	all_pages.sort();
-	let everything = '';
-	everything += `<h1>Special: <span id="title">All Pages</span></h1>`;
-	everything += `<ul>`;
-	for (let n = 0; n < all_pages.length; n++) {
-		let target = all_pages[n];
-		everything += `<li><a href="#" onclick="eliki.go('${escape(target)}'); return false;">${escape(target)}</a></li>`;
-	}
-	everything += `</ul>`;
-	document.querySelector('#everything').innerHTML = everything;
-}
-
 // -----------------------------------------------------------------------------
 
 ipcRenderer.on('view', (event, arg) => {
@@ -187,11 +208,14 @@ ipcRenderer.on('view', (event, arg) => {
 });
 
 ipcRenderer.on('list_all_pages', (event, arg) => {
-	list_all_pages();
+	eliki.list_all_pages();
 });
 
 if (fs.existsSync(pages_dir_path) === false) {
 	fs.mkdirSync(pages_dir_path);
 }
 
+// -----------------------------------------------------------------------------
+
+eliki.reset();
 eliki.go("Index");
