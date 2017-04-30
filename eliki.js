@@ -104,9 +104,9 @@ let eliki = {
 	view: function() {
 		let everything = '';
 		if (this.editable) {
-			everything += `<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>`;
+			everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>\n';
 		} else {
-			everything += `<h1>Special: <span id="title"></span></h1>`;
+			everything += '<h1>Special: <span id="title"></span></h1>\n';
 		}
 		everything += this.content;
 		document.querySelector('#everything').innerHTML = everything;
@@ -142,9 +142,9 @@ let eliki = {
 			return;
 		}
 		let everything = '';
-		everything += `<h1>Editing <span id="title"></span></h1>`;
-		everything += `<div><button onclick="eliki.save()">Save</button> &nbsp; <button onclick="eliki.go()">Cancel</button><br><br></div>`;
-		everything += `<div id="editordiv"><textarea id="editor"></textarea></div>`;
+		everything += '<h1>Editing <span id="title"></span></h1>\n';
+		everything += '<div><button onclick="eliki.save()">Save</button> &nbsp; <button onclick="eliki.go()">Cancel</button><br><br></div>\n';
+		everything += '<div id="editordiv"><textarea id="editor"></textarea></div>\n';
 		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#editor').value = this.markup;
 		document.querySelector('#title').innerHTML = this.escaped;
