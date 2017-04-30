@@ -162,6 +162,9 @@ let eliki = {
 // -----------------------------------------------------------------------------
 
 function allow_tabs() {
+
+	// http://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea/14166052
+
 	let textarea = document.querySelector('#editor');
 	textarea.onkeydown = function(e) {
 		if (e.keyCode == 9 || e.which == 9) {
