@@ -36,3 +36,11 @@ a:hover {color: #e0b872; text-decoration: underline;}
 a:active {color: #ffff00; text-decoration: underline;}
 
 .external {color: #ffff00 !important;}
+
+pre {
+	margin-left: 2em;
+	margin-right: 2em;
+	padding: 0.5em;
+	border-style: dashed;
+	border-color: #333333;
+}

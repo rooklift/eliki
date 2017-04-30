@@ -135,6 +135,7 @@ let eliki = {
 		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#editor').value = this.markup;
 		document.querySelector('#title').innerHTML = this.escaped;
+		allow_tabs();
 	},
 
 	save: function() {
@@ -159,6 +160,18 @@ let eliki = {
 }
 
 // -----------------------------------------------------------------------------
+
+function allow_tabs() {
+	let textarea = document.querySelector('#editor');
+	textarea.onkeydown = function(e) {
+		if (e.keyCode == 9 || e.which == 9) {
+			e.preventDefault();
+			let s = this.selectionStart;
+			this.value = this.value.substring(0, this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+			this.selectionEnd = s + 1;
+		}
+	}
+}
 
 function list_all_pages() {
 	let all_pages = fs.readdirSync(pages_dir_path);
