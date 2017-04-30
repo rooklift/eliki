@@ -105,7 +105,7 @@ let state = {
 		let everything = '';
 		everything += `<h1><span id="title"></span> &nbsp; [<a href="#" onclick="state.edit(); return false;">edit</a>]</h1>`;
 		everything += this.content;
-		document.querySelector('#content').innerHTML = everything;
+		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#title').innerHTML = this.escaped;
 
 		// We replace all real a tags with calls to this.open_external()
@@ -132,7 +132,7 @@ let state = {
 		everything += `<h1>Editing <span id="title"></span></h1>`;
 		everything += `<div><button onclick="state.save()">Save</button> &nbsp; <button onclick="state.go()">Cancel</button><br><br></div>`;
 		everything += `<div id="editordiv"><textarea id="editor"></textarea></div>`;
-		document.querySelector('#content').innerHTML = everything;
+		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#editor').value = this.markup;
 		document.querySelector('#title').innerHTML = this.escaped;
 	},
@@ -171,7 +171,7 @@ function list_all_pages() {
 		everything += `<li><a href="#" onclick="state.go('${escape(target)}'); return false;">${escape(target)}</a></li>`;
 	}
 	everything += `</ul>`;
-	document.querySelector('#content').innerHTML = everything;
+	document.querySelector('#everything').innerHTML = everything;
 }
 
 // -----------------------------------------------------------------------------
