@@ -139,7 +139,7 @@ let eliki = {
 		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#editor').value = this.markup;
 		document.querySelector('#title').innerHTML = this.escaped;
-		allow_tabs();
+		// allow_tabs();
 	},
 
 	save: function() {
@@ -168,6 +168,7 @@ let eliki = {
 function allow_tabs() {
 
 	// http://stackoverflow.com/questions/6637341/use-tab-to-indent-in-textarea/14166052
+	// FIXME: this currently breaks undo...
 
 	let textarea = document.querySelector('#editor');
 	textarea.onkeydown = function(e) {
