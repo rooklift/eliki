@@ -21,8 +21,7 @@ exports.new = (params = {}) => {
         height: params.height * zoom_factor,
         backgroundColor: "#000000",
         useContentSize: true,
-        resizable: params.resizable,
-        webPreferences: { zoomFactor: zoom_factor }
+        resizable: params.resizable
     });
 
     win.loadURL(url.format({
@@ -49,7 +48,9 @@ exports.change_zoom = (diff) => {
     for (n = 0; n < all.length; n += 1) {
         let contents = all[n].webContents;
         contents.getZoomFactor((val) => {
-            contents.setZoomFactor(val + diff);
+            if (val + diff >= 0.2) {
+                contents.setZoomFactor(val + diff);
+            }
         });
     }
 };

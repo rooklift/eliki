@@ -34,6 +34,7 @@ function menu_build() {
 				},
 				{
 					label: "Edit this page",
+					accelerator: "CmdOrCtrl+E",
 					click: () => {
 						windows.send("edit", "");
 					}
@@ -58,14 +59,22 @@ function menu_build() {
 				},
 				{
 					label: "Zoom out",
+					accelerator: "CmdOrCtrl+-",
 					click: () => {
 						windows.change_zoom(-0.1);
 					}
 				},
 				{
+					accelerator: "CmdOrCtrl+=",
 					label: "Zoom in",
 					click: () => {
 						windows.change_zoom(0.1);
+					}
+				},
+				{
+					label: "Reset zoom",
+					click: () => {
+						windows.set_zoom(1.0);
 					}
 				},
 				{
