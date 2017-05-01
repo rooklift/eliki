@@ -33,13 +33,22 @@ function menu_build() {
 					type: "separator"
 				},
 				{
-					label: "Goto Index",
+					label: "Edit this page",
+					click: () => {
+						windows.send("edit", "");
+					}
+				},
+				{
+					type: "separator"
+				},
+				{
+					label: "Go to Index",
 					click: () => {
 						windows.send("view", "Index");
 					}
 				},
 				{
-					label: "List All Pages",
+					label: "List all pages",
 					click: () => {
 						windows.send("list_all_pages", "");
 					}
@@ -60,13 +69,16 @@ function menu_build() {
 					}
 				},
 				{
-					role: "quit"
+					type: "separator"
+				},
+				{
+					role: "toggledevtools"
 				},
 				{
 					type: "separator"
 				},
 				{
-					role: "toggledevtools"
+					role: "quit"
 				}
 			]
 		}

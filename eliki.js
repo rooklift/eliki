@@ -203,6 +203,10 @@ function allow_tabs() {
 
 // -----------------------------------------------------------------------------
 
+ipcRenderer.on('edit', (event, arg) => {
+	eliki.edit();
+});
+
 ipcRenderer.on('view', (event, arg) => {
 	eliki.go(arg);
 });
@@ -215,7 +219,4 @@ if (fs.existsSync(pages_dir_path) === false) {
 	fs.mkdirSync(pages_dir_path);
 }
 
-// -----------------------------------------------------------------------------
-
-eliki.reset();
 eliki.go("Index");
