@@ -10,8 +10,8 @@ textarea {
 	margin-left: auto;
 	margin-right: auto;
 	width: 100%;
-	height: 35em;
 	tab-size: 4;
+	outline: none;
 }
 
 #title {

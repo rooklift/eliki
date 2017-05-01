@@ -143,12 +143,13 @@ let eliki = {
 		}
 		let everything = '';
 		everything += '<h1>Editing <span id="title"></span></h1>\n';
-		everything += '<div><button onclick="eliki.save()">Save</button> &nbsp; <button onclick="eliki.go()">Cancel</button><br><br></div>\n';
-		everything += '<div id="editordiv"><textarea id="editor"></textarea></div>\n';
+		everything += '<button onclick="eliki.save()">Save</button> &nbsp; <button onclick="eliki.go()">Cancel</button><br><br>\n';
+		everything += '<textarea id="editor"></textarea>\n';
 		document.querySelector('#everything').innerHTML = everything;
 		document.querySelector('#editor').value = this.markup;
 		document.querySelector('#title').innerHTML = this.escaped;
 		allow_tabs();
+		fix_textarea_height();
 	},
 
 	save: function() {
@@ -199,6 +200,15 @@ function allow_tabs() {
 			document.execCommand("insertText", false, "\t");
 		}
 	}, false);
+}
+
+function fix_textarea_height() {
+	let ta = document.querySelector("#editor");
+	let ta_top = ta.getBoundingClientRect().top;
+	let window_height = window.innerHeight
+	let new_ta_height = Math.floor(window_height - ta_top) - 50;
+	new_ta_height = Math.max(new_ta_height, 100);
+	ta.style.height = new_ta_height.toString() + "px";
 }
 
 // -----------------------------------------------------------------------------
