@@ -104,7 +104,11 @@ let eliki = {
 	view: function() {
 		let everything = '';
 		if (this.editable) {
-			everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>\n';
+			if (this.content === "") {
+				everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">create</a>]</h1>\n';
+			} else {
+				everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>\n';
+			}
 		} else {
 			everything += '<h1>Special: <span id="title"></span></h1>\n';
 		}
@@ -153,8 +157,8 @@ let eliki = {
 	},
 
 	save: function() {
-		let new_markup = document.querySelector('#editor').value;
-		if (new_markup.trim() === '') {
+		let new_markup = document.querySelector('#editor').value.trim();
+		if (new_markup === '') {
 			if (fs.existsSync(this.filepath)) {
 				fs.unlinkSync(this.filepath);
 			}
