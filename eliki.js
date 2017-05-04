@@ -105,12 +105,12 @@ let eliki = {
 		let everything = '';
 		if (this.editable) {
 			if (this.content === "") {
-				everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">create</a>]</h1>\n';
+				everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">create</a>]</h1>\n<hr />';
 			} else {
-				everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>\n';
+				everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>\n<hr />';
 			}
 		} else {
-			everything += '<h1>Special: <span id="title"></span></h1>\n';
+			everything += '<h1>Special: <span id="title"></span></h1>\n<hr />';
 		}
 		everything += this.content;
 		document.querySelector('#everything').innerHTML = everything;
@@ -157,7 +157,11 @@ let eliki = {
 	},
 
 	save: function() {
-		let new_markup = document.querySelector('#editor').value.trim();
+		let editor = document.querySelector('#editor');
+		if (editor === null) {
+			return;
+		}
+		let new_markup = editor.value.trim();
 		if (new_markup === '') {
 			if (fs.existsSync(this.filepath)) {
 				fs.unlinkSync(this.filepath);
@@ -219,6 +223,10 @@ function fix_textarea_height() {
 
 ipcRenderer.on('edit', (event, arg) => {
 	eliki.edit();
+});
+
+ipcRenderer.on('save', (event, arg) => {
+	eliki.save();
 });
 
 ipcRenderer.on('view', (event, arg) => {

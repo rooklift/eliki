@@ -40,6 +40,13 @@ function menu_build() {
 					}
 				},
 				{
+					label: "Save",
+					accelerator: "CmdOrCtrl+S",
+					click: () => {
+						windows.send("save", "");
+					}
+				},
+				{
 					type: "separator"
 				},
 				{
