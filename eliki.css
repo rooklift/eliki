@@ -32,3 +32,19 @@ pre {
 	border-style: dashed;
 	border-color: #333333;
 }
+
+blockquote {
+	margin-left: 2em;
+	margin-right: 2em;
+	padding: 0.5em;
+	border-style: dashed;
+	border-color: #333333;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+blockquote p:first-child {
+	margin-top: 0;
+}
