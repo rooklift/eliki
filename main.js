@@ -3,7 +3,7 @@
 const electron = require("electron");
 const ipcMain = require("electron").ipcMain;
 const windows = require("./modules/windows");
-const alert = require("./modules/alert");
+const alert = require("./modules/alert").alert;
 
 const MOTD = `
 Make wikilinks [[like so]].
@@ -26,7 +26,10 @@ function menu_build() {
 				{
 					label: "Help",
 					click: () => {
-						alert.alert(electron.app.getName() + " " + electron.app.getVersion() + " running under Electron " + process.versions.electron + "\n" + MOTD);
+						let name = electron.app.getName();
+						let app_v = electron.app.getVersion();
+						let electron_v = process.versions.electron;
+						alert(`${name} ${app_v} running under Electron ${electron_v}\n${MOTD}`);
 					}
 				},
 				{
