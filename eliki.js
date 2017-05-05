@@ -105,12 +105,12 @@ let eliki = {
 		let everything = '';
 		if (this.editable) {
 			if (this.content === "") {
-				everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">create</a>]</h1>\n<hr />';
+				everything += '<h1 class="top"><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">create</a>]</h1>\n<hr />';
 			} else {
-				everything += '<h1><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>\n<hr />';
+				everything += '<h1 class="top"><span id="title"></span> &nbsp; [<a href="#" onclick="eliki.edit(); return false;">edit</a>]</h1>\n<hr />';
 			}
 		} else {
-			everything += '<h1>Special: <span id="title"></span></h1>\n<hr />';
+			everything += '<h1 class="top">Special: <span id="title"></span></h1>\n<hr />';
 		}
 		everything += this.content;
 		document.querySelector('#everything').innerHTML = everything;
@@ -146,7 +146,7 @@ let eliki = {
 			return;
 		}
 		let everything = '';
-		everything += '<h1>Editing <span id="title"></span></h1>\n';
+		everything += '<h1 class="top">Editing <span id="title"></span></h1>\n';
 		everything += '<button onclick="eliki.save()">Save</button> &nbsp; <button onclick="eliki.go()">Cancel</button><br><br>\n';
 		everything += '<textarea id="editor"></textarea>\n';
 		document.querySelector('#everything').innerHTML = everything;

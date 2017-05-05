@@ -14,7 +14,15 @@ textarea {
 	outline: none;
 }
 
+h1.top {
+	color: white;
+}
+
 #title {
+	color: #ff845e;
+}
+
+h1, h2, h3 {
 	color: #ff845e;
 }
 
