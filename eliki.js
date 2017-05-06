@@ -1,5 +1,9 @@
 "use strict";
 
+const WIKIPEDIA_BASE = "http://en.wikipedia.org/wiki/";
+
+// -----------------------------------------------------------------------------
+
 const alert = require('./modules/alert.js').alert;
 const app = require('electron').remote.app;
 const escape = require('escape-html');
@@ -11,9 +15,7 @@ const sanitize = require('sanitize-filename');
 const shell = require('electron').shell;
 const unescape = require('unescape-html');
 
-// -----------------------------------------------------------------------------
-
-marked.setOptions({sanitize: true});	// Important!
+marked.setOptions({sanitize: true, breaks: true});
 
 const userdata_path = app.getPath('userData');
 const pages_dir_path = path.join(userdata_path, 'pages');
@@ -55,7 +57,7 @@ let eliki = {
 		if (fs.existsSync(this.filepath)) {
 			this.markup = fs.readFileSync(this.filepath, 'UTF8');
 		} else {
-			this.markup = ''
+			this.markup = '';
 		}
 
 		this.editable = true;
@@ -74,6 +76,23 @@ let eliki = {
 	parse: function() {
 
 		let result = this.markup;
+
+		// First convert [[w:links]] to external Markdown style:
+		// [[w:Foo]] --> [Foo](http://en.wikipedia.org/wiki/Foo)
+
+		while (1) {
+			let m = result.match(/(\[\[w:.*?\]\])/);
+			if (m === null) {
+				break;
+			}
+
+			let subject = m[1].slice(4, -2);
+			let url = WIKIPEDIA_BASE + subject;
+			result = result.replace(m[1], "[" + subject + "](" + url + ")");
+		}
+
+		// Now apply the Markdown parser...
+
 		result = marked(result);
 
 		// Each internal [[link]] gets put in the array of links, so
@@ -172,6 +191,11 @@ let eliki = {
 		this.go();
 	},
 
+	source: function() {
+		let everything = escape(this.content);
+		document.querySelector('#everything').innerHTML = everything;
+	},
+
 	open_external: function(i) {
 		try {
 			shell.openExternal(this.external[i]);
@@ -231,6 +255,10 @@ ipcRenderer.on('save', (event, arg) => {
 
 ipcRenderer.on('view', (event, arg) => {
 	eliki.go(arg);
+});
+
+ipcRenderer.on('source', (event, arg) => {
+	eliki.source();
 });
 
 ipcRenderer.on('list_all_pages', (event, arg) => {

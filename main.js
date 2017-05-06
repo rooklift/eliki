@@ -6,7 +6,8 @@ const windows = require("./modules/windows");
 const alert = require("./modules/alert").alert;
 
 const MOTD = `
-Make wikilinks [[like so]].
+Internal wikilinks look like [[this]].
+Links to Wikipedia look like [[w:this]].
 Everything else is Markdown.`
 
 electron.app.on("ready", () => {
@@ -21,7 +22,7 @@ electron.app.on("window-all-closed", () => {
 function menu_build() {
 	const template = [
 		{
-			label: "Menu",
+			label: "Wiki",
 			submenu: [
 				{
 					label: "Help",
@@ -68,6 +69,15 @@ function menu_build() {
 					type: "separator"
 				},
 				{
+					role: "quit"
+				}
+			]
+		},
+
+		{
+			label: "View",
+			submenu: [
+				{
 					label: "Zoom out",
 					accelerator: "CmdOrCtrl+-",
 					click: () => {
@@ -86,18 +96,21 @@ function menu_build() {
 					click: () => {
 						windows.set_zoom(1.0);
 					}
-				},
+				}
+			]
+		},
+
+		{
+			label: "Developer",
+			submenu: [
 				{
-					type: "separator"
+					label: "Debug parsed markup",
+					click: () => {
+						windows.send("source", "");
+					}
 				},
 				{
 					role: "toggledevtools"
-				},
-				{
-					type: "separator"
-				},
-				{
-					role: "quit"
 				}
 			]
 		}
