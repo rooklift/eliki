@@ -8,7 +8,7 @@ const alert = require("./modules/alert").alert;
 const MOTD = `
 Internal wikilinks look like [[this]].
 Links to Wikipedia look like [[w:this]].
-Everything else is Markdown.`
+Everything else is Markdown.`;
 
 electron.app.on("ready", () => {
 	windows.new({width: 1600, height: 900, page: "eliki.html"});

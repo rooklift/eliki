@@ -144,7 +144,7 @@ let eliki = {
 
 		for (let i = 0; i < a_tags.length; i++) {
 			if (a_tags[i].getAttribute('href') !== '#') {
-				let target = encodeURI(a_tags[i].getAttribute('href'))
+				let target = encodeURI(a_tags[i].getAttribute('href'));
 				this.external.push(target);
 				let id = this.external.length - 1;
 				a_tags[i].setAttribute('onclick', `eliki.open_external(${id}); return false;`);
@@ -216,7 +216,7 @@ let eliki = {
 
 		this.parse_and_view();
 	}
-}
+};
 
 // -----------------------------------------------------------------------------
 
@@ -237,7 +237,7 @@ function allow_tabs() {
 function fix_textarea_height() {
 	let ta = document.querySelector("#editor");
 	let ta_top = ta.getBoundingClientRect().top;
-	let window_height = window.innerHeight
+	let window_height = window.innerHeight;
 	let new_ta_height = Math.floor(window_height - ta_top) - 50;
 	new_ta_height = Math.max(new_ta_height, 100);
 	ta.style.height = new_ta_height.toString() + "px";
