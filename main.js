@@ -54,6 +54,15 @@ function menu_build() {
 					type: "separator"
 				},
 				{
+					label: "Archive whole wiki (tar.gz)",
+					click: () => {
+						windows.send("archive", "");
+					}
+				},
+				{
+					type: "separator"
+				},
+				{
 					label: "Go to Index",
 					click: () => {
 						windows.send("view", "Index");

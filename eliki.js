@@ -6,6 +6,7 @@ const WIKIPEDIA_BASE = "http://en.wikipedia.org/wiki/";
 
 const alert = require('./modules/alert.js').alert;
 const app = require('electron').remote.app;
+const dialog = require('electron').remote.dialog;
 const escape = require('escape-html');
 const fs = require('fs');
 const ipcRenderer = require('electron').ipcRenderer;
@@ -13,6 +14,7 @@ const marked = require('marked');
 const path = require('path');
 const sanitize = require('sanitize-filename');
 const shell = require('electron').shell;
+const targz = require('targz');
 const unescape = require('unescape-html');
 
 marked.setOptions({sanitize: true, breaks: true});
@@ -215,6 +217,19 @@ let eliki = {
 		}
 
 		this.parse_and_view();
+	},
+
+	archive: function() {
+		let filters = [{name: 'tar.gz', extensions: ['tar.gz']}];
+		let target = dialog.showSaveDialog({filters: filters});
+
+		if (target) {
+			targz.compress({src: pages_dir_path, dest: target}, function(err) {
+				if (err) {
+					alert(err);
+				}
+			});
+		}
 	}
 };
 
@@ -263,6 +278,10 @@ ipcRenderer.on('source', (event, arg) => {
 
 ipcRenderer.on('list_all_pages', (event, arg) => {
 	eliki.list_all_pages();
+});
+
+ipcRenderer.on('archive', (event, arg) => {
+	eliki.archive();
 });
 
 if (fs.existsSync(pages_dir_path) === false) {

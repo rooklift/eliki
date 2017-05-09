@@ -7,9 +7,10 @@
 		"url": "https://github.com/fohristiwhirl/eliki"
 	},
 	"dependencies": {
-		"marked": "^0.3.6",
+		"marked": "0.3.6",
 		"escape-html": "1.0.3",
         "sanitize-filename": "1.6.1",
+        "targz": "1.0.1",
 		"unescape-html": "1.0.0"
 	}
 }

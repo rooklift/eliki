@@ -35,4 +35,5 @@ Eliki *example* page...
 * [escape-html](https://www.npmjs.com/package/escape-html)
 * [marked](https://www.npmjs.com/package/marked)
 * [sanitize-filename](https://www.npmjs.com/package/sanitize-filename)
+* [targz](https://www.npmjs.com/package/targz)
 * [unescape-html](https://www.npmjs.com/package/unescape-html)
