@@ -194,7 +194,7 @@ let eliki = {
 	},
 
 	source: function() {
-		let everything = escape(this.content);
+		let everything = escape(document.querySelector('#everything').innerHTML);
 		document.querySelector('#everything').innerHTML = everything;
 	},
 

@@ -113,7 +113,7 @@ function menu_build() {
 			label: "Developer",
 			submenu: [
 				{
-					label: "Debug parsed markup",
+					label: "Debug HTML",
 					click: () => {
 						windows.send("source", "");
 					}
