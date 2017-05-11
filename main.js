@@ -1,9 +1,10 @@
 "use strict";
 
+const alert = require("./modules/alert").alert;
 const electron = require("electron");
 const ipcMain = require("electron").ipcMain;
+const shell = require('electron').shell;
 const windows = require("./modules/windows");
-const alert = require("./modules/alert").alert;
 
 const MOTD = `
 Internal wikilinks look like [[this]].
@@ -112,6 +113,15 @@ function menu_build() {
 		{
 			label: "Developer",
 			submenu: [
+				{
+					label: "Github repo",
+					click: () => {
+						shell.openExternal("https://github.com/fohristiwhirl/eliki");
+					}
+				},
+				{
+					type: "separator"
+				},
 				{
 					label: "Debug HTML",
 					click: () => {

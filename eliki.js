@@ -33,7 +33,7 @@ let eliki = {
 		this.filepath = "";			// Complete path for the file we are dealing with
 
 		this.markup = "";			// Markup read from the file
-		this.content = "";			// Result after parsing the markup
+		this.content = "";			// Result after parsing the markup - but without fixing external links
 		this.internal = [];			// All internal links
 		this.external = [];			// All external links
 
@@ -194,7 +194,7 @@ let eliki = {
 	},
 
 	source: function() {
-		let everything = escape(document.querySelector('#everything').innerHTML);
+		let everything = escape(document.querySelector('#everything').innerHTML).replace("\n", "<br>");
 		document.querySelector('#everything').innerHTML = everything;
 	},
 
