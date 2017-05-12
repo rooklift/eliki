@@ -199,10 +199,9 @@ let eliki = {
 	},
 
 	open_external: function(i) {
-		try {
-			shell.openExternal(this.external[i]);
-		} catch (err) {
-			// I dunno what could go wrong.
+		let success = shell.openExternal(this.external[i]);
+		if (success === false) {
+			alert("Couldn't open. Invalid URL?");
 		}
 	},
 
