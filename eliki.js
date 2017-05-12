@@ -52,6 +52,7 @@ let eliki = {
 		this.setup(s);
 
 		if (this.filename === '') {
+			shell.beep();
 			alert("Tried to go to <empty string>");
 			this.go("Index");
 		}
@@ -163,6 +164,7 @@ let eliki = {
 
 	edit: function() {
 		if (this.editable === false) {
+			shell.beep();
 			alert("Cannot edit this page.");
 			return;
 		}
@@ -201,6 +203,7 @@ let eliki = {
 	open_external: function(i) {
 		let success = shell.openExternal(this.external[i]);
 		if (success === false) {
+			shell.beep();
 			alert("Couldn't open. Invalid URL?");
 		}
 	},
@@ -225,6 +228,7 @@ let eliki = {
 		if (target) {
 			targz.compress({src: pages_dir_path, dest: target}, function(err) {
 				if (err) {
+					shell.beep();
 					alert(err);
 				}
 			});
