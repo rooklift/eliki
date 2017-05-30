@@ -4,10 +4,11 @@
 
 # Wiki Notes
 
-* Internal wikilinks are formatted [[like so]].
 * Pages are stored as individual files.
 * Page titles are not case-sensitive but will purge some characters not allowed in filenames.
-* Everything you write will be interpreted as Markdown.
+* Internal wikilinks are formatted [[like so]].
+* Links to Wikipedia pages can be make [[w:like so]].
+* Everything else you write will be interpreted as Markdown.
 * External links are opened in your main web browser.
 
 # Example Page
