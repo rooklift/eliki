@@ -18,7 +18,7 @@ function alert_renderer(msg) {
     });
 }
 
-exports.alert = (msg) => {
+module.exports = (msg) => {
     if (process.type === "renderer") {
         alert_renderer(msg);
     } else {

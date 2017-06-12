@@ -1,6 +1,6 @@
 "use strict";
 
-const alert = require("./modules/alert").alert;
+const alert = require("./modules/alert");
 const electron = require("electron");
 const ipcMain = require("electron").ipcMain;
 const shell = require('electron').shell;

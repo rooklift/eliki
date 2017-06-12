@@ -4,7 +4,7 @@ const WIKIPEDIA_BASE = "http://en.wikipedia.org/wiki/";
 
 // -----------------------------------------------------------------------------
 
-const alert = require('./modules/alert.js').alert;
+const alert = require('./modules/alert');
 const app = require('electron').remote.app;
 const dialog = require('electron').remote.dialog;
 const escape = require('escape-html');

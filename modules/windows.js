@@ -2,7 +2,6 @@
 
 const electron = require("electron");
 const url = require("url");
-const alert = require("./alert").alert;
 const assign_without_overwrite = require("./utils").assign_without_overwrite;
 
 const all = [];
