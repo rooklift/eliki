@@ -2,7 +2,6 @@
 
 const alert = require("./modules/alert");
 const electron = require("electron");
-const ipcMain = require("electron").ipcMain;
 const shell = require('electron').shell;
 const windows = require("./modules/windows");
 
