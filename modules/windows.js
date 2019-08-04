@@ -20,7 +20,10 @@ exports.new = (params = {}) => {
         height: params.height * zoom_factor,
         backgroundColor: "#000000",
         useContentSize: true,
-        resizable: params.resizable
+        resizable: params.resizable,
+        webPreferences: {
+			nodeIntegration: true
+		}
     });
 
     win.loadURL(url.format({
