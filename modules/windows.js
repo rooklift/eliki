@@ -22,15 +22,16 @@ exports.new = (params = {}) => {
         useContentSize: true,
         resizable: params.resizable,
         webPreferences: {
-			nodeIntegration: true
-		}
+            zoomFactor: zoom_factor,
+            nodeIntegration: true,
+            contextIsolation: false,
+        }
     });
 
-    win.loadURL(url.format({
-        protocol: "file:",
-        pathname: params.page,
-        slashes: true
-    }));
+    let query = {};
+    query.user_data_path = electron.app.getPath("userData");
+
+    win.loadFile(params.page, {query: query});
 
     all.push(win);
 
