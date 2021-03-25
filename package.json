@@ -9,8 +9,8 @@
 	"dependencies": {
 		"marked": "2.0.1",
 		"escape-html": "1.0.3",
-		"sanitize-filename": "1.6.1",
-		"tar-fs": ">=1.16.2",
+		"sanitize-filename": "1.6.3",
+		"tar-fs": "2.1.1",
 		"targz": "1.0.1",
 		"unescape-html": "1.1.0"
 	}
