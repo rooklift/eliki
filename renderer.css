@@ -39,11 +39,12 @@ h1, h2, h3, h4, h5 {
 	cursor: pointer;
 }
 
-.external {
-	color: #ffff00;
-	text-decoration: underline;
-	cursor: pointer;
-}
+/* Only external links use <a> */
+
+a:link {color: #ffff00; text-decoration: underline;}
+a:visited {color: #ffff00; text-decoration: underline;}
+a:hover {color: #ffff00; text-decoration: underline;}
+a:active {color: #ffffff; text-decoration: underline;}
 
 pre {
 	margin-left: 2em;
