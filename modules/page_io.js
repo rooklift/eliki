@@ -15,8 +15,8 @@ try {
 }
 
 
-exports.get = function(title) {
-	
+exports.load = function(title) {
+
 	let filepath = path.join(pages_dir_path, title);
 
 	if (fs.existsSync(filepath) === false) {

@@ -23,7 +23,7 @@ const page_prototype = {
 	},
 
 	autoload: function() {
-		this.set_markdown(page_io.get(this.title));
+		this.set_markdown(page_io.load(this.title));
 	},
 
 	autosave: function() {
