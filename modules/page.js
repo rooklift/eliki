@@ -20,8 +20,8 @@ const page_prototype = {
 	set_markdown: function(s) {
 
 		this.markdown = s;
-		
-		s = s.replace(/\[\[(.*?)\]\]/, `<span class="internal">$1</span>`);
+
+		s = s.replace(/\[\[(.*?)\]\]/g, `<span class="internal">$1</span>`);
 		this.html = marked.marked(s);
 	},
 
