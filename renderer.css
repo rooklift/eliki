@@ -1,6 +1,7 @@
 body {
 	background-color: black;
 	color: white;
+	font-size: 24px;
 	margin: 1em;
 }
 
@@ -22,16 +23,28 @@ h1.top {
 	color: #ff845e;
 }
 
+#editbutton {
+	color: #e0b872;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 h1, h2, h3, h4, h5 {
 	color: #ff845e;
 }
 
-a:link {color: #e0b872; text-decoration: underline;}
-a:visited {color: #e0b872; text-decoration: underline;}
-a:hover {color: #e0b872; text-decoration: underline;}
-a:active {color: #ffff00; text-decoration: underline;}
+.internal {
+	color: #e0b872;
+	text-decoration: underline;
+	cursor: pointer;
+}
 
-.external {color: #ffff00 !important;}
+/* Only external links use <a> */
+
+a:link {color: #ffff00; text-decoration: underline;}
+a:visited {color: #ffff00; text-decoration: underline;}
+a:hover {color: #ffff00; text-decoration: underline;}
+a:active {color: #ffffff; text-decoration: underline;}
 
 pre {
 	margin-left: 2em;
