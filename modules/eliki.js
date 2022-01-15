@@ -4,7 +4,6 @@ const {ipcRenderer} = require("electron");
 
 const config_io = require("./config_io");
 const page = require("./page");
-const page_io = require("./page_io");
 
 
 let current_page = null;
