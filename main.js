@@ -125,6 +125,9 @@ function menu_build() {
 					}
 				},
 				{
+					type: "separator",
+				},
+				{
 					label: "Quit",
 					accelerator: "CommandOrControl+Q",
 					role: "quit"
