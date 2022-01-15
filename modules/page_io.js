@@ -15,9 +15,15 @@ try {
 }
 
 
+function safe_filename(s) {
+	s = s.replace(/\./g, "");
+	return s;
+}
+
+
 exports.load = function(title) {
 
-	let filepath = path.join(pages_dir_path, title);
+	let filepath = path.join(pages_dir_path, safe_filename(title));
 
 	if (fs.existsSync(filepath) === false) {
 		return "";
@@ -28,7 +34,7 @@ exports.load = function(title) {
 
 exports.save = function(title, markdown) {
 
-	let filepath = path.join(pages_dir_path, title);
+	let filepath = path.join(pages_dir_path, safe_filename(title));
 
 	if (markdown.length > 0) {
 		fs.writeFileSync(filepath, markdown, "utf8");
