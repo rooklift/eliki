@@ -18,8 +18,22 @@ exports.new_page = function(title) {
 const page_prototype = {
 
 	set_markdown: function(s) {
+
 		this.markdown = s;
-		this.html = marked.marked(this.markdown);
+
+		// Replace internal [[links]] with spans
+
+		while (1) {
+			let m = s.match(/(\[\[.*?\]\])/);
+			if (m === null) {
+				break;
+			}
+
+			// m[1] is like "[[foo]]" so slice to get "foo"
+			s = s.replace(m[1], `<span class="internal">${m[1].slice(2, -2)}</span>`);
+		}
+
+		this.html = marked.marked(s);
 	},
 
 	autoload: function() {
@@ -45,6 +59,13 @@ const page_prototype = {
 		document.getElementById("editbutton").addEventListener("click", () => {
 			eliki.edit();
 		});
+
+		let int_links = document.getElementsByClassName("internal");
+		for (let item of int_links) {
+			item.addEventListener("click", () => {
+				eliki.go(item.innerHTML);
+			});
+		}
 
 	},
 

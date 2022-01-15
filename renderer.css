@@ -26,12 +26,10 @@ h1, h2, h3, h4, h5 {
 	color: #ff845e;
 }
 
-a:link {color: #e0b872; text-decoration: underline;}
-a:visited {color: #e0b872; text-decoration: underline;}
-a:hover {color: #e0b872; text-decoration: underline;}
-a:active {color: #ffff00; text-decoration: underline;}
+.internal {color: #e0b872; text-decoration: underline;}
+.external {color: #ffff00; text-decoration: underline;}
 
-.external {color: #ffff00 !important;}
+#editbutton {color: #e0b872; text-decoration: underline;}
 
 pre {
 	margin-left: 2em;
