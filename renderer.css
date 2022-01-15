@@ -26,10 +26,10 @@ h1, h2, h3, h4, h5 {
 	color: #ff845e;
 }
 
-.internal {color: #e0b872; text-decoration: underline;}
-.external {color: #ffff00; text-decoration: underline;}
+.internal {color: #e0b872; text-decoration: underline; cursor: pointer;}
+.external {color: #ffff00; text-decoration: underline; cursor: pointer;}
 
-#editbutton {color: #e0b872; text-decoration: underline;}
+#editbutton {color: #e0b872; text-decoration: underline; cursor: pointer;}
 
 pre {
 	margin-left: 2em;
