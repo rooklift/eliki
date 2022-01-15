@@ -9,7 +9,7 @@ const page = require("./page");
 let current_page = null;
 
 
-exports.quit = function() {
+exports.quit = () => {
 
 	config.width = Math.floor(window.innerWidth * zoomfactor);
 	config.height = Math.floor(window.innerHeight * zoomfactor);
@@ -19,7 +19,7 @@ exports.quit = function() {
 
 };
 
-exports.go = function(title) {
+exports.go = (title) => {
 
 	current_page = page.new_page(title);
 
@@ -28,10 +28,10 @@ exports.go = function(title) {
 
 };
 
-exports.index = function() {
+exports.index = () => {
 	exports.go("Index");
 };
 
-exports.edit = function() {
+exports.edit = () => {
 	current_page.edit();
 };

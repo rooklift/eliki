@@ -21,7 +21,7 @@ function safe_filename(s) {
 }
 
 
-exports.load = function(title) {
+exports.load = (title) => {
 
 	let filepath = path.join(pages_dir_path, safe_filename(title));
 
@@ -34,7 +34,7 @@ exports.load = function(title) {
 	return fs.readFileSync(filepath, "utf8");
 };
 
-exports.save = function(title, markdown) {
+exports.save = (title, markdown) => {
 
 	let filepath = path.join(pages_dir_path, safe_filename(title));
 

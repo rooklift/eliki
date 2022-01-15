@@ -13,7 +13,7 @@ if (Number.isNaN(major_version)) {
 
 let alerts_open = 0;
 
-module.exports = function(msg) {
+module.exports = (msg) => {
 
 	if (alerts_open >= 3) {
 		console.log(msg);
