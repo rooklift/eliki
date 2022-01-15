@@ -20,19 +20,8 @@ const page_prototype = {
 	set_markdown: function(s) {
 
 		this.markdown = s;
-
-		// Replace internal [[links]] with spans
-
-		while (1) {
-			let m = s.match(/(\[\[.*?\]\])/);
-			if (m === null) {
-				break;
-			}
-
-			// m[1] is like "[[foo]]" so slice to get "foo"
-			s = s.replace(m[1], `<span class="internal">${m[1].slice(2, -2)}</span>`);
-		}
-
+		
+		s = s.replace(/\[\[(.*?)\]\]/, `<span class="internal">$1</span>`);
 		this.html = marked.marked(s);
 	},
 
@@ -61,6 +50,7 @@ const page_prototype = {
 		});
 
 		let int_links = document.getElementsByClassName("internal");
+
 		for (let item of int_links) {
 			item.addEventListener("click", () => {
 				eliki.go(item.innerHTML);
