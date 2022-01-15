@@ -102,6 +102,15 @@ function menu_build() {
 					type: "separator",
 				},
 				{
+					label: `Show pages`,
+					click: () => {
+						electron.shell.showItemInFolder(path.join(electron.app.getPath("userData"), "pages"));
+					}
+				},
+				{
+					type: "separator",
+				},
+				{
 					label: "Edit this page",
 					accelerator: "CmdOrCtrl+E",
 					click: () => {
