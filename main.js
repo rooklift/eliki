@@ -2,7 +2,7 @@
 
 const alert = require("./modules/alert");
 const electron = require("electron");
-const shell = require('electron').shell;
+const shell = require("electron").shell;
 const windows = require("./modules/windows");
 
 const MOTD = `
