@@ -1,5 +1,6 @@
 "use strict";
 
+const electron = require("electron");
 const page_io = require("./page_io");
 const marked = require("marked");
 
@@ -37,7 +38,7 @@ const page_prototype = {
 
 		let everything = "";
 
-		everything += `<h1 class="top"><span id="title">${this.title}</span> [<a id="editbutton" href="#">edit</a>]</h1>\n`;
+		everything += `<h1 class="top"><span id="title">${this.title}</span> [<span id="editbutton">edit</span>]</h1>\n`;
 		everything += `<hr />`;
 		everything += this.html;
 
@@ -54,6 +55,15 @@ const page_prototype = {
 		for (let item of int_links) {
 			item.addEventListener("click", () => {
 				eliki.go(item.innerHTML);
+			});
+		}
+
+		let ext_links = document.getElementsByTagName("a");
+
+		for (let item of ext_links) {
+			item.addEventListener("click", (event) => {
+				event.preventDefault();
+				electron.shell.openExternal(item.href);
 			});
 		}
 
