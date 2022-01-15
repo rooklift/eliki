@@ -22,16 +22,6 @@ global.eliki = require("./eliki");
 // ------------------------------------------------------------------------------------------------
 // Menu handlers...
 
-ipcRenderer.on("set", (event, msg) => {
-	for (let [key, value] of Object.entries(msg)) {
-		config[key] = value;
-	}
-});
-
-ipcRenderer.on("toggle", (event, msg) => {
-	config[msg] = !config[msg];
-});
-
 ipcRenderer.on("call", (event, msg) => {
 	eliki[msg]();
 });
