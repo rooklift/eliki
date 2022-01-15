@@ -1,17 +1,8 @@
 {
 	"name": "Eliki",
-	"version": "0.3.1",
+	"version": "2.0.0",
 	"main": "main.js",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/fohristiwhirl/eliki"
-	},
 	"dependencies": {
-		"marked": "4.0.10",
-		"escape-html": "1.0.3",
-		"sanitize-filename": "1.6.3",
-		"tar-fs": "2.1.1",
-		"targz": "1.0.1",
-		"unescape-html": "1.1.0"
+		"marked": "4.0.10"
 	}
 }

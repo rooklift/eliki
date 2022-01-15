@@ -1,139 +1,124 @@
 "use strict";
 
-const alert = require("./modules/alert");
 const electron = require("electron");
-const shell = require("electron").shell;
-const windows = require("./modules/windows");
+const path = require("path");
+const url = require("url");
 
-const MOTD = `
-Internal wikilinks look like [[this]].
-Links to Wikipedia look like [[w:this]].
-Everything else is Markdown.`;
+const alert = require("./modules/alert_main");
+const config_io = require("./modules/config_io");
+const stringify = require("./modules/stringify");
 
-electron.app.on("ready", () => {
-	windows.new({width: 1600, height: 900, page: "eliki.html"});
-	menu_build();
+config_io.load();
+let config = config_io.config;
+
+let menu = menu_build();
+let win;						// We're supposed to keep global references to every window we make.
+
+electron.app.whenReady().then(() => {
+	startup();
 });
 
-electron.app.on("window-all-closed", () => {
-	electron.app.quit();
-});
+// --------------------------------------------------------------------------------------------------------------
+
+function startup() {
+
+	let desired_zoomfactor = 1 / electron.screen.getPrimaryDisplay().scaleFactor;
+
+	win = new electron.BrowserWindow({
+		width: config.width,
+		height: config.height,
+		backgroundColor: "#000000",
+		resizable: true,
+		show: false,
+		useContentSize: true,
+		webPreferences: {
+			backgroundThrottling: false,
+			contextIsolation: false,
+			nodeIntegration: true,
+			spellcheck: false,
+			zoomFactor: desired_zoomfactor			// Unreliable, see https://github.com/electron/electron/issues/10572
+		}
+	});
+
+	win.once("ready-to-show", () => {
+		try {
+			win.webContents.setZoomFactor(desired_zoomfactor);	// This seems to work, note issue 10572 above.
+		} catch (err) {
+			win.webContents.zoomFactor = desired_zoomfactor;	// The method above "will be removed" in future.
+		}
+		win.show();
+		win.focus();
+	});
+
+	win.once("close", (event) => {					// Note the once...
+		event.preventDefault();						// We prevent the close one time only,
+		win.webContents.send("call", "quit");		// to let renderer's "quit" method run once. It then sends "terminate" back.
+	});
+
+	electron.ipcMain.on("terminate", () => {
+		win.close();
+	});
+
+	electron.app.on("window-all-closed", () => {
+		electron.app.quit();
+	});
+
+	electron.ipcMain.on("alert", (event, msg) => {
+		alert(msg);
+	});
+
+	// Actually load the page last, I guess, so the event handlers above are already set up.
+	// Send some possibly useful info as a query.
+
+	let query = {};
+	query.user_data_path = electron.app.getPath("userData");
+	query.zoomfactor = desired_zoomfactor;
+
+	win.loadFile(
+		path.join(__dirname, "renderer.html"),
+		{query: query}
+	);
+
+	electron.Menu.setApplicationMenu(menu);
+}
+
+// --------------------------------------------------------------------------------------------------------------
 
 function menu_build() {
 	const template = [
 		{
-			label: "Wiki",
+			label: "App",
 			submenu: [
 				{
-					label: "Help",
+					label: "About",
 					click: () => {
-						let name = electron.app.getName();
-						let app_v = electron.app.getVersion();
-						let electron_v = process.versions.electron;
-						alert(`${name} ${app_v} running under Electron ${electron_v}\n${MOTD}`);
+						alert(`${electron.app.getName()} (${electron.app.getVersion()}) in Electron (${process.versions.electron})`);
 					}
 				},
 				{
-					type: "separator"
-				},
-				{
-					label: "Edit this page",
-					accelerator: "CmdOrCtrl+E",
-					click: () => {
-						windows.send("edit", "");
-					}
-				},
-				{
-					label: "Save",
-					accelerator: "CmdOrCtrl+S",
-					click: () => {
-						windows.send("save", "");
-					}
-				},
-				{
-					type: "separator"
-				},
-				{
-					label: "Archive whole wiki (tar.gz)",
-					click: () => {
-						windows.send("archive", "");
-					}
-				},
-				{
-					type: "separator"
-				},
-				{
-					label: "Go to Index",
-					click: () => {
-						windows.send("view", "Index");
-					}
-				},
-				{
-					label: "List all pages",
-					click: () => {
-						windows.send("list_all_pages", "");
-					}
-				},
-				{
-					type: "separator"
-				},
-				{
-					role: "quit"
-				}
-			]
-		},
-
-		{
-			label: "View",
-			submenu: [
-				{
-					label: "Zoom out",
-					accelerator: "CmdOrCtrl+-",
-					click: () => {
-						windows.change_zoom(-0.1);
-					}
-				},
-				{
-					accelerator: "CmdOrCtrl+=",
-					label: "Zoom in",
-					click: () => {
-						windows.change_zoom(0.1);
-					}
-				},
-				{
-					label: "Reset zoom",
-					click: () => {
-						windows.set_zoom(1.0);
-					}
-				}
-			]
-		},
-
-		{
-			label: "Developer",
-			submenu: [
-				{
-					label: "Github repo",
-					click: () => {
-						shell.openExternal("https://github.com/fohristiwhirl/eliki");
-					}
-				},
-				{
-					type: "separator"
-				},
-				{
-					label: "Debug HTML",
-					click: () => {
-						windows.send("source", "");
-					}
+					type: "separator",
 				},
 				{
 					role: "toggledevtools"
-				}
+				},
+				{
+					label: `Show ${config_io.filename}`,
+					click: () => {
+						electron.shell.showItemInFolder(config_io.filepath);
+					}
+				},
+				{
+					type: "separator",
+				},
+				{
+					label: "Quit",
+					accelerator: "CommandOrControl+Q",
+					role: "quit"
+				},
 			]
-		}
+		},
 	];
 
-	const menu = electron.Menu.buildFromTemplate(template);
-	electron.Menu.setApplicationMenu(menu);
+	return electron.Menu.buildFromTemplate(template);
 }
+
