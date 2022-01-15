@@ -95,7 +95,7 @@ let eliki = {
 
 		// Now apply the Markdown parser...
 
-		result = marked(result);
+		result = marked.marked(result);
 
 		// Each internal [[link]] gets put in the array of links, so
 		// they can be referred to by number, which is safer.
