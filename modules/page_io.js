@@ -25,6 +25,8 @@ exports.load = function(title) {
 
 	let filepath = path.join(pages_dir_path, safe_filename(title));
 
+	console.log("Load:", title, filepath);
+
 	if (fs.existsSync(filepath) === false) {
 		return "";
 	}
@@ -35,6 +37,8 @@ exports.load = function(title) {
 exports.save = function(title, markdown) {
 
 	let filepath = path.join(pages_dir_path, safe_filename(title));
+
+	console.log("Save:", title, filepath);
 
 	if (markdown.length > 0) {
 		fs.writeFileSync(filepath, markdown, "utf8");
