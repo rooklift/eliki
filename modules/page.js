@@ -74,7 +74,7 @@ const page_prototype = {
 		});
 
 		document.getElementById("cancelbutton").addEventListener("click", () => {
-			eliki.go(this.title);
+			this.render();
 		});
 	},
 
