@@ -29,6 +29,10 @@ exports.go = function(title) {
 
 };
 
+exports.index = function() {
+	exports.go("Index");
+};
+
 exports.edit = function() {
 	current_page.edit();
 };

@@ -96,19 +96,24 @@ function menu_build() {
 					}
 				},
 				{
-					type: "separator",
-				},
-				{
 					role: "toggledevtools"
 				},
 				{
-					label: `Show ${config_io.filename}`,
+					type: "separator",
+				},
+				{
+					label: "Edit this page",
+					accelerator: "CmdOrCtrl+E",
 					click: () => {
-						electron.shell.showItemInFolder(config_io.filepath);
+						win.webContents.send("call", "edit");
 					}
 				},
 				{
-					type: "separator",
+					label: "Go to Index",
+					accelerator: "CmdOrCtrl+I",
+					click: () => {
+						win.webContents.send("call", "index");
+					}
 				},
 				{
 					label: "Quit",
