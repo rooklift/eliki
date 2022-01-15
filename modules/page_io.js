@@ -16,17 +16,28 @@ try {
 
 
 exports.get = function(title) {
+	
 	let filepath = path.join(pages_dir_path, title);
+
 	if (fs.existsSync(filepath) === false) {
 		return "";
 	}
+
 	return fs.readFileSync(filepath, "utf8");
 };
 
 exports.save = function(title, markdown) {
+
 	let filepath = path.join(pages_dir_path, title);
-	fs.writeFileSync(filepath, markdown, "utf8");
-	
-	// todo: if markdown is zero-length, delete the file
+
+	if (markdown.length > 0) {
+		fs.writeFileSync(filepath, markdown, "utf8");
+	} else {
+		try {
+			fs.rmSync(filepath);
+		} catch(err) {
+			// pass
+		}
+	}
 };
 

@@ -40,10 +40,12 @@ const page_prototype = {
 
 		document.getElementById("content").innerHTML = everything;			// Do this first so the getElement lookups below work.
 
+		// ---
+
 		document.getElementById("editbutton").addEventListener("click", () => {
 			eliki.edit();
 		});
-		
+
 	},
 
 	edit: function() {
@@ -56,7 +58,11 @@ const page_prototype = {
 
 		document.getElementById("content").innerHTML = everything;			// Do this first so the getElement lookups below work.
 
-		document.getElementById("editor").value = this.markdown;
+		// ---
+
+		let editor = document.getElementById("editor");
+		editor.style.height = Math.max(window.innerHeight - editor.getBoundingClientRect().top - 32, 100).toString() + "px";
+		editor.value = this.markdown;
 
 		document.getElementById("savebutton").addEventListener("click", () => {
 			let editor = document.getElementById("editor");
