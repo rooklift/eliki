@@ -31,7 +31,7 @@ const page_prototype = {					// We also set this.html, which requires multiple s
 
 		s = s.replace(/&/g, `&amp;`);
 		s = s.replace(/</g, `&lt;`);
-		// s = s.replace(/>/g, `&gt;`);		// By commenting this out, we allow Markdown blockquotes with >
+/*		s = s.replace(/>/g, `&gt;`);		// By commenting this out, we allow Markdown blockquotes with >				*/
 		s = s.replace(/'/g, `&apos;`);
 		s = s.replace(/"/g, `&quot;`);
 
