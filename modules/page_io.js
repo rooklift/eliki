@@ -51,3 +51,8 @@ exports.save = (title, markdown) => {
 	}
 };
 
+exports.get_page_list = () => {
+	let all_pages = fs.readdirSync(pages_dir_path);
+	all_pages.sort();
+	return all_pages;
+};

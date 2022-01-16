@@ -111,17 +111,24 @@ function menu_build() {
 					type: "separator",
 				},
 				{
-					label: "Edit this page",
+					label: "Edit",
 					accelerator: "CmdOrCtrl+E",
 					click: () => {
 						win.webContents.send("call", "edit");
 					}
 				},
 				{
-					label: "Go to Index",
+					label: "Index",
 					accelerator: "CmdOrCtrl+I",
 					click: () => {
 						win.webContents.send("call", "index");
+					}
+				},
+				{
+					label: "Page list",
+					accelerator: "CmdOrCtrl+L",
+					click: () => {
+						win.webContents.send("call", "page_list");
 					}
 				},
 				{

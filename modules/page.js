@@ -5,12 +5,13 @@ const page_io = require("./page_io");
 const marked = require("marked");
 
 
-exports.new_page = function(title) {
+exports.new_page = function(title, special) {
 
 	return Object.assign(Object.create(page_prototype), {
 		title: title,
 		markdown: null,
 		html: null,
+		special: special ? true : false,
 	});
 	
 };
@@ -51,7 +52,7 @@ const page_prototype = {
 
 		let everything = "";
 
-		everything += `<h1 class="top"><span id="title">${this.title}</span> [<span id="editbutton">edit</span>]</h1>\n`;
+		everything += `<h1 class="top"><span id="title">${this.title}</span> ${!this.special ? `[<span id="editbutton">edit</span>]` : ""}</h1>\n`;
 		everything += `<hr />`;
 		everything += this.html;
 
@@ -59,9 +60,13 @@ const page_prototype = {
 
 		// ---
 
-		document.getElementById("editbutton").addEventListener("click", () => {
-			eliki.edit();
-		});
+		let editbutton = document.getElementById("editbutton");
+
+		if (editbutton) {
+			editbutton.addEventListener("click", () => {
+				eliki.edit();
+			});
+		}
 
 		let int_links = document.getElementsByClassName("internal");
 
@@ -83,6 +88,11 @@ const page_prototype = {
 	},
 
 	edit: function() {
+
+		if (this.special) {
+			alert("Cannot edit special pages.");
+			return;
+		}
 
 		let everything = "";
 

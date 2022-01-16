@@ -4,6 +4,7 @@ const {ipcRenderer} = require("electron");
 
 const config_io = require("./config_io");
 const page = require("./page");
+const page_io = require("./page_io");
 
 
 let current_page = null;
@@ -35,4 +36,18 @@ exports.index = () => {
 
 exports.edit = () => {
 	current_page.edit();
+};
+
+exports.page_list = () => {
+
+	let all_pages = page_io.get_page_list();
+
+	let md = "";
+	for (let item of all_pages) {
+		md += `* [[${item}]]\n`;
+	}
+
+	current_page = page.new_page("Special: All Pages", true);
+	current_page.set_markdown(md);
+	current_page.render();
 };
