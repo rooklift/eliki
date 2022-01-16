@@ -37,7 +37,7 @@ const page_prototype = {					// We also set this.html, which requires multiple s
 
 		// 2. Markdown parser:
 
-		s = marked.marked(s);
+		s = marked.parse(s);
 
 		// 3. Obfuscate [[stuff like this]] from <code> tags so it doesn't get turned into internal links later.
 		// I can't see a better way to do this than creating a DOM and finding the <code> tags that way:
