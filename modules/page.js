@@ -14,7 +14,7 @@ exports.new_page = function(title, special) {
 	return Object.assign(Object.create(page_prototype), {
 		title: title,
 		special: special ? true : false,
-		markdown: "MARKDOWN NOT INITIALISED",
+		markdown: null,
 	});
 	
 };
@@ -24,6 +24,10 @@ const page_prototype = {
 	get_html() {
 
 		let s = this.markdown;
+
+		if (typeof s !== "string") {
+			throw new Error("page.markdown was not a string.");
+		}
 
 		// 1. Escaping for HTML safety:
 
