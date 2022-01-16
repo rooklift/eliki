@@ -22,7 +22,7 @@ global.eliki = require("./eliki");
 // ------------------------------------------------------------------------------------------------
 // Menu handlers...
 
-ipcRenderer.on("call", (event, msg) => {
+ipcRenderer.on("call", (event, msg) => {		// This simple system is fine unless we need args.
 	eliki[msg]();
 });
 
