@@ -22,7 +22,20 @@ const page_prototype = {
 
 		this.markdown = s;
 
+		// We also set this.html, after:
+		//
+		// - Escaping for HTML safety
+		// - Converting [[links]] to special <span> elements
+		// - Running everything through the markdown parser
+
+		s = s.replace(/&/g, `&amp;`);
+		s = s.replace(/</g, `&lt;`);
+		s = s.replace(/>/g, `&gt;`);
+		s = s.replace(/'/g, `&apos;`);
+		s = s.replace(/"/g, `&quot;`);
+
 		s = s.replace(/\[\[(.*?)\]\]/g, `<span class="internal">$1</span>`);
+
 		this.html = marked.marked(s);
 	},
 
