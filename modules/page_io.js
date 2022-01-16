@@ -16,7 +16,11 @@ try {
 
 
 function safe_filename(s) {
-	s = s.replace(/[.\\/:*<>?|]/g, "_");
+
+	s = s.trim();
+	s = s.replace(/[.\\/:*<>?|]/g, "_");		// Reserved chars
+	s = s.replace(/\s/g, "_");					// Whitespace
+
 	return s;
 }
 
