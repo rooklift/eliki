@@ -51,3 +51,7 @@ exports.page_list = () => {
 	current_page.set_markdown(md);
 	current_page.render();
 };
+
+exports.debug = () => {
+	return current_page;
+};
