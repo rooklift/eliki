@@ -21,7 +21,7 @@ exports.new_page = function(title, special) {
 
 const page_prototype = {
 
-	get html() {
+	get_html() {
 
 		let s = this.markdown;
 
@@ -64,10 +64,6 @@ const page_prototype = {
 		return s;
 	},
 
-	set html(s) {
-		throw new Error("Setting page.html is not permitted.");
-	},
-
 	autoload: function() {
 		this.markdown = page_io.load(this.title);
 	},
@@ -82,7 +78,7 @@ const page_prototype = {
 
 		everything += `<h1 class="top"><span id="title">${this.title}</span> ${!this.special ? `[<span id="editbutton">edit</span>]` : ""}</h1>\n`;
 		everything += `<hr />`;
-		everything += this.html;
+		everything += this.get_html();
 
 		document.body.innerHTML = everything;			// Do this first so the getElement lookups below work.
 
