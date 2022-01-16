@@ -21,10 +21,11 @@ exports.quit = () => {
 
 exports.go = (title) => {
 
-	current_page = page.new_page(title);
-
-	current_page.autoload();
-	current_page.render();
+	if (typeof title === "string" && title.length > 0) {
+		current_page = page.new_page(title);
+		current_page.autoload();
+		current_page.render();
+	}
 
 };
 
