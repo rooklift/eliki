@@ -82,7 +82,7 @@ const page_prototype = {				// We also set this.html, which requires multiple st
 		everything += `<hr />`;
 		everything += this.html;
 
-		document.getElementById("content").innerHTML = everything;			// Do this first so the getElement lookups below work.
+		document.body.innerHTML = everything;			// Do this first so the getElement lookups below work.
 
 		// ---
 
@@ -126,7 +126,7 @@ const page_prototype = {				// We also set this.html, which requires multiple st
 		everything += `<button id="savebutton">Save</button> &nbsp; <button id="cancelbutton">Cancel</button><br><br>\n`;
 		everything += `<textarea id="editor"></textarea>\n`;
 
-		document.getElementById("content").innerHTML = everything;			// Do this first so the getElement lookups below work.
+		document.body.innerHTML = everything;						// Do this first so the getElement lookups below work.
 
 		// ---
 
@@ -134,7 +134,7 @@ const page_prototype = {				// We also set this.html, which requires multiple st
 		editor.style.height = Math.max(window.innerHeight - editor.getBoundingClientRect().top - 48, 100).toString() + "px";
 		editor.value = this.markdown;
 
-		editor.addEventListener("keydown", (event) => {						// This allows tabs to happen in the editor textarea.
+		editor.addEventListener("keydown", (event) => {				// This allows tabs to happen in the editor textarea.
 			if (event.which === 9) {
 				event.preventDefault();
 				document.execCommand("insertText", false, "\t");
