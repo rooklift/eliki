@@ -42,7 +42,7 @@ const page_prototype = {				// We also set this.html, which requires multiple st
 		// 3. Obfuscate [[stuff like this]] from <code> tags so it doesn't get turned into internal links later.
 		// I can't see a better way to do this than creating a DOM and finding the <code> tags that way:
 
-		let foo = document.createElement("html");
+		let foo = document.createElement("div");
 		foo.innerHTML = s;
 
 		for (let item of foo.getElementsByTagName("code")) {
