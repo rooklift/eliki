@@ -48,7 +48,7 @@ exports.page_list = () => {
 	}
 
 	current_page = page.new_page("Special: All Pages", true);
-	current_page.set_markdown(md);
+	current_page.markdown = md;
 	current_page.render();
 };
 

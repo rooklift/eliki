@@ -13,19 +13,17 @@ exports.new_page = function(title, special) {
 
 	return Object.assign(Object.create(page_prototype), {
 		title: title,
-		markdown: null,
-		html: null,
 		special: special ? true : false,
+		markdown: "MARKDOWN NOT INITIALISED",
 	});
 	
 };
 
+const page_prototype = {
 
-const page_prototype = {					// We also set this.html, which requires multiple steps...
+	get html() {
 
-	set_markdown: function(s) {
-
-		this.markdown = s;
+		let s = this.markdown;
 
 		// 1. Escaping for HTML safety:
 
@@ -63,11 +61,15 @@ const page_prototype = {					// We also set this.html, which requires multiple s
 
 		// 6. Done:
 
-		this.html = s;
+		return s;
+	},
+
+	set html(s) {
+		throw new Error("Setting page.html is not permitted.");
 	},
 
 	autoload: function() {
-		this.set_markdown(page_io.load(this.title));
+		this.markdown = page_io.load(this.title);
 	},
 
 	autosave: function() {
@@ -142,12 +144,9 @@ const page_prototype = {					// We also set this.html, which requires multiple s
 		});
 
 		document.getElementById("savebutton").addEventListener("click", () => {
-			let editor = document.getElementById("editor");
-			if (editor) {
-				this.set_markdown(editor.value);
-				this.autosave();
-				this.render();
-			}
+			this.markdown = document.getElementById("editor").value;
+			this.autosave();
+			this.render();
 		});
 
 		document.getElementById("cancelbutton").addEventListener("click", () => {
