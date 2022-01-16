@@ -134,7 +134,7 @@ const page_prototype = {				// We also set this.html, which requires multiple st
 		editor.style.height = Math.max(window.innerHeight - editor.getBoundingClientRect().top - 48, 100).toString() + "px";
 		editor.value = this.markdown;
 
-		editor.addEventListener("keydown", (event) => {				// This allows tabs to happen in the editor textarea.
+		editor.addEventListener("keydown", (event) => {				// This allows the tab key to be used in the textarea.
 			if (event.which === 9) {
 				event.preventDefault();
 				document.execCommand("insertText", false, "\t");
