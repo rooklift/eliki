@@ -5,6 +5,10 @@ const page_io = require("./page_io");
 const marked = require("marked");
 
 
+const magic_left  = "db73nx91izs7d8egr2gu283a9gh";
+const magic_right = "b6x9ahr12fgf20fg2f82f7ofg48";
+
+
 exports.new_page = function(title, special) {
 
 	return Object.assign(Object.create(page_prototype), {
@@ -17,17 +21,13 @@ exports.new_page = function(title, special) {
 };
 
 
-const page_prototype = {
+const page_prototype = {				// We also set this.html, which requires multiple steps...
 
 	set_markdown: function(s) {
 
 		this.markdown = s;
 
-		// We also set this.html, after:
-		//
-		// - Escaping for HTML safety
-		// - Converting [[links]] to special <span> elements
-		// - Running everything through the markdown parser
+		// 1. Escaping for HTML safety:
 
 		s = s.replace(/&/g, `&amp;`);
 		s = s.replace(/</g, `&lt;`);
@@ -35,9 +35,33 @@ const page_prototype = {
 		s = s.replace(/'/g, `&apos;`);
 		s = s.replace(/"/g, `&quot;`);
 
-		s = s.replace(/\[\[(.*?)\]\]/g, `<span class="internal">$1</span>`);		// FIXME - interaction with code blocks containing [[foo]]
+		// 2. Markdown parser:
 
 		s = marked.marked(s);
+
+		// 3. Obfuscate [[stuff like this]] from <code> tags so it doesn't get turned into internal links later.
+		// I can't see a better way to do this than creating a DOM and finding the <code> tags that way:
+
+		let foo = document.createElement("html");
+		foo.innerHTML = s;
+
+		for (let item of foo.getElementsByTagName("code")) {
+			item.innerHTML = item.innerHTML.replace(/\[\[(.*?)\]\]/g, `${magic_left}$1${magic_right}`);
+		}
+
+		s = foo.innerHTML;			// So after this point, we are once again working on a string, not a DOMish thing.
+
+		// 4. Parse actual internal links:
+
+		s = s.replace(/\[\[(.*?)\]\]/g, `<span class="internal">$1</span>`);
+
+		// 5. Restore [[stuff]] which we obfuscated above:
+
+		let regex = new RegExp(`${magic_left}(.*?)${magic_right}`, "g");
+
+		s = s.replace(regex, `[[$1]]`);
+
+		// 6. Done:
 
 		this.html = s;
 	},
