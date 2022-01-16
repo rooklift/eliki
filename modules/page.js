@@ -35,9 +35,11 @@ const page_prototype = {
 		s = s.replace(/'/g, `&apos;`);
 		s = s.replace(/"/g, `&quot;`);
 
-		s = s.replace(/\[\[(.*?)\]\]/g, `<span class="internal">$1</span>`);
+		s = s.replace(/\[\[(.*?)\]\]/g, `<span class="internal">$1</span>`);		// FIXME - interaction with code blocks containing [[foo]]
 
-		this.html = marked.marked(s);
+		s = marked.marked(s);
+
+		this.html = s;
 	},
 
 	autoload: function() {
