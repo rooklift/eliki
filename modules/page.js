@@ -59,8 +59,6 @@ const page_prototype = {
 			item.innerHTML = item.innerHTML.replace(/&amp;apos;/g, "&apos;");
 			item.innerHTML = item.innerHTML.replace(/&amp;quot;/g, "&quot;");
 			
-			
-
 			// Obfuscate [[stuff like this]] from <code> tags so it doesn't get turned into internal links later.
 			// I can't see a better way to do this than creating a DOM and finding the <code> tags that way:
 
