@@ -53,10 +53,13 @@ const page_prototype = {
 			// Anything inside a code block will be escaped, but we already escaped some stuff so this leads
 			// to some things being escaped twice. Undo this:
 
-			item.innerHTML = item.innerHTML.replace(/&amp;lt;/g, "&lt;");
-			item.innerHTML = item.innerHTML.replace(/&amp;quot;/g, "&quot;");
-			item.innerHTML = item.innerHTML.replace(/&amp;apos;/g, "&apos;");
 			item.innerHTML = item.innerHTML.replace(/&amp;amp;/g, "&amp;");
+			item.innerHTML = item.innerHTML.replace(/&amp;lt;/g, "&lt;");
+//			item.innerHTML = item.innerHTML.replace(/&amp;gt;/g, "&gt;");			// See above.
+			item.innerHTML = item.innerHTML.replace(/&amp;apos;/g, "&apos;");
+			item.innerHTML = item.innerHTML.replace(/&amp;quot;/g, "&quot;");
+			
+			
 
 			// Obfuscate [[stuff like this]] from <code> tags so it doesn't get turned into internal links later.
 			// I can't see a better way to do this than creating a DOM and finding the <code> tags that way:
