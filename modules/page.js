@@ -51,7 +51,7 @@ const page_prototype = {
 		for (let item of foo.getElementsByTagName("code")) {
 
 			// Anything inside a code block will be escaped, but we already escaped some stuff so this leads
-			// to some things being escaped twice. Undo this (in REVERSE ORDER):
+			// to some things being escaped twice. Undo this (in REVERSE ORDER, especially & must be last):
 			
 			item.innerHTML = item.innerHTML.replace(/&amp;quot;/g, "&quot;");
 			item.innerHTML = item.innerHTML.replace(/&amp;apos;/g, "&apos;");
