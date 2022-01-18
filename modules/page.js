@@ -35,7 +35,7 @@ const page_prototype = {
 
 		s = s.replace(/&/g, `&amp;`);
 		s = s.replace(/</g, `&lt;`);
-//		s = s.replace(/>/g, `&gt;`);			// Commented so blockquotes can work.
+//		s = s.replace(/>/g, `&gt;`);					// Commented so blockquotes can work.
 		s = s.replace(/'/g, `&apos;`);
 		s = s.replace(/"/g, `&quot;`);
 
@@ -43,26 +43,32 @@ const page_prototype = {
 
 		s = marked.parse(s);
 
-		// Deal with some issues caused inside code tags:
+		// Deal with some issues caused inside code tags.
+		// I can't see a better way to do this than creating a DOM and finding the <code> tags that way:
 
 		let foo = document.createElement("div");
 		foo.innerHTML = s;
 
 		for (let item of foo.getElementsByTagName("code")) {
 
+			let z = item.innerHTML;
+
 			// Anything inside a code block will be escaped, but we already escaped some stuff so this leads
 			// to some things being escaped twice. Undo this (in REVERSE ORDER, especially & must be last):
 			
-			item.innerHTML = item.innerHTML.replace(/&amp;quot;/g, "&quot;");
-			item.innerHTML = item.innerHTML.replace(/&amp;apos;/g, "&apos;");
-//			item.innerHTML = item.innerHTML.replace(/&amp;gt;/g, "&gt;");			// See above.
-			item.innerHTML = item.innerHTML.replace(/&amp;lt;/g, "&lt;");
-			item.innerHTML = item.innerHTML.replace(/&amp;amp;/g, "&amp;");
-
+			z = z.replace(/&amp;quot;/g, "&quot;");
+			z = z.replace(/&amp;apos;/g, "&apos;");
+//			z = z.replace(/&amp;gt;/g, "&gt;");			// See above.
+			z = z.replace(/&amp;lt;/g, "&lt;");
+			z = z.replace(/&amp;amp;/g, "&amp;");
+			
 			// Obfuscate [[stuff like this]] from <code> tags so it doesn't get turned into internal links later.
-			// I can't see a better way to do this than creating a DOM and finding the <code> tags that way:
 
-			item.innerHTML = item.innerHTML.replace(/\[\[(.*?)\]\]/g, `${magic_left}$1${magic_right}`);
+			z = z.replace(/\[\[(.*?)\]\]/g, `${magic_left}$1${magic_right}`);
+
+			// Commit these changes to the <code> block's HTML:
+
+			item.innerHTML = z;
 		}
 
 		s = foo.innerHTML;			// So after this point, we are once again working on a string, not a DOMish thing.
